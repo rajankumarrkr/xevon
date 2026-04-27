@@ -31,8 +31,8 @@ const AdminLogin = () => {
     return (
         <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)' }}>
             {/* Background Effects */}
-            <div style={{ position: 'absolute', top: '20%', left: '10%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)', filter: 'blur(40px)' }} />
-            <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+            <div style={{ position: 'absolute', top: '20%', left: '10%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+            <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)', filter: 'blur(40px)' }} />
 
             <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -49,9 +49,9 @@ const AdminLogin = () => {
                 <div className="flex justify-center" style={{ marginBottom: 28 }}>
                     <div style={{
                         width: 64, height: 64, borderRadius: 20,
-                        background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)',
+                        background: 'linear-gradient(135deg, #2563EB, #3B82F6)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 0 40px rgba(59,130,246,0.3)'
+                        boxShadow: '0 0 40px rgba(37,99,235,0.3)'
                     }}>
                         <ShieldCheck size={32} style={{ color: '#fff' }} />
                     </div>
@@ -66,7 +66,7 @@ const AdminLogin = () => {
                 </div>
 
                 {error && (
-                    <div style={{ padding: '12px 16px', marginBottom: 24, borderRadius: 12, background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.2)', color: '#fb7185', fontSize: '0.8rem', fontWeight: 600, textAlign: 'center' }}>
+                    <div style={{ padding: '12px 16px', marginBottom: 24, borderRadius: 12, background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.2)', color: '#fb7185', fontSize: '0.8rem', fontWeight: 600, textAlign: 'center' }}>
                         {error}
                     </div>
                 )}
@@ -88,7 +88,7 @@ const AdminLogin = () => {
                                     color: '#F8FAFC', fontWeight: 700, fontSize: '0.9rem',
                                     outline: 'none', transition: 'all 0.25s', fontFamily: 'inherit'
                                 }}
-                                onFocus={(e) => { e.target.style.borderColor = 'rgba(59,130,246,0.5)'; e.target.style.boxShadow = '0 0 20px rgba(59,130,246,0.1)'; }}
+                                onFocus={(e) => { e.target.style.borderColor = 'rgba(37,99,235,0.5)'; e.target.style.boxShadow = '0 0 20px rgba(37,99,235,0.1)'; }}
                                 onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none'; }}
                             />
                         </div>
@@ -110,7 +110,7 @@ const AdminLogin = () => {
                                     color: '#F8FAFC', fontWeight: 700, fontSize: '0.9rem',
                                     outline: 'none', transition: 'all 0.25s', fontFamily: 'inherit'
                                 }}
-                                onFocus={(e) => { e.target.style.borderColor = 'rgba(59,130,246,0.5)'; e.target.style.boxShadow = '0 0 20px rgba(59,130,246,0.1)'; }}
+                                onFocus={(e) => { e.target.style.borderColor = 'rgba(37,99,235,0.5)'; e.target.style.boxShadow = '0 0 20px rgba(37,99,235,0.1)'; }}
                                 onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none'; }}
                             />
                         </div>
@@ -121,11 +121,11 @@ const AdminLogin = () => {
                         disabled={loading}
                         style={{
                             width: '100%', padding: '16px', borderRadius: 14, border: 'none',
-                            background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)',
+                            background: 'linear-gradient(135deg, #2563EB, #3B82F6)',
                             color: '#fff', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '1px',
                             textTransform: 'uppercase', cursor: loading ? 'not-allowed' : 'pointer',
                             opacity: loading ? 0.7 : 1, transition: 'all 0.3s',
-                            boxShadow: '0 8px 30px rgba(59,130,246,0.3)', fontFamily: 'inherit'
+                            boxShadow: '0 8px 30px rgba(37,99,235,0.3)', fontFamily: 'inherit'
                         }}
                     >
                         {loading ? 'Authenticating...' : 'Access Dashboard'}

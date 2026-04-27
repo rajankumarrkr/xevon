@@ -118,7 +118,7 @@ const AdminPlans = () => {
                                         width: 48, height: 26, borderRadius: 20, padding: 3, cursor: 'pointer', transition: 'all 0.25s',
                                         background: formData.isActive ? 'var(--accent)' : 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.1)'
                                     }}>
-                                        <motion.div animate={{ x: formData.isActive ? 22 : 0 }} style={{ width: 20, height: 20, borderRadius: '50%', background: '#0B1D3A' }} />
+                                        <motion.div animate={{ x: formData.isActive ? 22 : 0 }} style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }} />
                                     </div>
                                 </div>
                                 <button type="submit" className="premium-btn" style={{ padding: '16px', width: '100%' }}><Save size={18} /> Save</button>

@@ -32,8 +32,13 @@ const Login = () => {
             >
                 {/* Logo */}
                 <div className="flex justify-center" style={{ marginBottom: 32 }}>
-                    <div style={{ width: 60, height: 60, borderRadius: 18, background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 40px rgba(0,229,255,0.25)' }}>
-                        <Zap size={30} style={{ color: '#0B1D3A' }} />
+                    <div style={{
+                        width: 60, height: 60, borderRadius: 18,
+                        background: 'var(--primary-gradient)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 8px 32px rgba(37,99,235,0.3)'
+                    }}>
+                        <Zap size={30} style={{ color: '#ffffff' }} />
                     </div>
                 </div>
 
@@ -43,7 +48,7 @@ const Login = () => {
                 </div>
 
                 {error && (
-                    <div style={{ padding: '12px 16px', marginBottom: 24, borderRadius: 12, background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.2)', color: '#fb7185', fontSize: '0.8rem', fontWeight: 600, textAlign: 'center' }}>
+                    <div style={{ padding: '12px 16px', marginBottom: 24, borderRadius: 14, background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.15)', color: 'var(--error)', fontSize: '0.8rem', fontWeight: 600, textAlign: 'center' }}>
                         {error}
                     </div>
                 )}
@@ -86,7 +91,7 @@ const Login = () => {
                     </button>
 
                     <div className="flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)', fontSize: 10, fontWeight: 600 }}>
-                        <ShieldCheck size={14} style={{ color: 'rgba(0,229,255,0.5)' }} />
+                        <ShieldCheck size={14} style={{ color: 'var(--accent)' }} />
                         SECURE AES-256 CONNECTION
                     </div>
                 </form>

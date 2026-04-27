@@ -24,7 +24,14 @@ const AdminLayout = () => {
         <div style={{ padding: mobile ? '24px' : '32px', display: 'flex', flexDirection: 'column', gap: 32, height: '100%' }}>
             <div>
                 <div className="flex items-center gap-3" style={{ marginBottom: 6 }}>
-                    <Terminal style={{ color: 'var(--accent)' }} size={22} />
+                    <div style={{
+                        width: 32, height: 32, borderRadius: 10,
+                        background: 'var(--primary-gradient)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(37,99,235,0.25)'
+                    }}>
+                        <Terminal style={{ color: '#fff' }} size={16} />
+                    </div>
                     <h1 className="outfit" style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px' }}>XEVON</h1>
                 </div>
                 <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '2px' }}>ADMIN PANEL v3.2</p>
@@ -35,8 +42,8 @@ const AdminLayout = () => {
                     <Link key={item.path} to={item.path} onClick={() => setSidebarOpen(false)} style={{ textDecoration: 'none', color: location.pathname === item.path ? 'var(--accent)' : 'var(--text-muted)' }}>
                         <div className="flex items-center gap-3" style={{
                             padding: '14px 16px', borderRadius: 14, transition: 'all 0.2s',
-                            background: location.pathname === item.path ? 'rgba(59,130,246,0.08)' : 'transparent',
-                            border: location.pathname === item.path ? '1px solid rgba(59,130,246,0.15)' : '1px solid transparent'
+                            background: location.pathname === item.path ? 'rgba(37,99,235,0.06)' : 'transparent',
+                            border: location.pathname === item.path ? '1px solid rgba(37,99,235,0.12)' : '1px solid transparent'
                         }}>
                             <item.icon size={18} />
                             <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>{item.label}</span>
@@ -46,7 +53,7 @@ const AdminLayout = () => {
             </nav>
 
             <div style={{ marginTop: 'auto' }}>
-                <Link to="/" className="flex items-center gap-3" style={{ padding: '14px 16px', borderRadius: 14, background: 'var(--bg-glass)', border: '1px solid rgba(0,0,0,0.04)', textDecoration: 'none', color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.8rem' }}>
+                <Link to="/" className="flex items-center gap-3" style={{ padding: '14px 16px', borderRadius: 14, background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.06)', textDecoration: 'none', color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.8rem' }}>
                     <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} /> User Dashboard
                 </Link>
             </div>
@@ -59,7 +66,7 @@ const AdminLayout = () => {
             <aside style={{
                 width: 260, margin: 20, height: 'calc(100vh - 40px)', position: 'fixed',
                 display: 'none', flexDirection: 'column', zIndex: 100, borderRadius: 24,
-                background: 'rgba(255,255,255,0.8)', overflow: 'hidden'
+                background: 'rgba(255,255,255,0.85)', overflow: 'hidden'
             }} className="glass-card desktop-sidebar">
                 <Sidebar />
             </aside>
@@ -67,14 +74,20 @@ const AdminLayout = () => {
             {/* Mobile Header */}
             <div className="mobile-admin-header" style={{
                 position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-                padding: '16px 20px', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(20px)',
-                borderBottom: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+                padding: '16px 20px', background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)',
+                borderBottom: '1px solid rgba(37,99,235,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
             }}>
                 <div className="flex items-center gap-3">
-                    <Terminal size={20} style={{ color: 'var(--accent)' }} />
+                    <div style={{
+                        width: 28, height: 28, borderRadius: 8,
+                        background: 'var(--primary-gradient)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <Terminal size={14} style={{ color: '#fff' }} />
+                    </div>
                     <span className="outfit" style={{ fontWeight: 800, fontSize: '1.1rem' }}>XEVON Admin</span>
                 </div>
-                <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}>
+                <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ padding: 8, borderRadius: 10, background: 'rgba(37,99,235,0.05)', border: '1px solid rgba(37,99,235,0.08)', color: 'var(--text-primary)' }}>
                     {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
             </div>
@@ -85,10 +98,10 @@ const AdminLayout = () => {
                     <>
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                             onClick={() => setSidebarOpen(false)}
-                            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 250 }}
+                            style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.4)', zIndex: 250 }}
                         />
                         <motion.div initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }} transition={{ type: 'spring', damping: 25 }}
-                            style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: 260, zIndex: 300, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(25px)', borderRight: '1px solid rgba(0,0,0,0.06)' }}>
+                            style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: 260, zIndex: 300, background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(25px)', borderRight: '1px solid rgba(37,99,235,0.06)' }}>
                             <Sidebar mobile />
                         </motion.div>
                     </>

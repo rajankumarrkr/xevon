@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const StatCard = ({ label, value, icon: Icon, color, trend }) => (
     <div className="glass-card" style={{ padding: '18px', flex: '1 1 0%', minWidth: 120 }}>
         <div className="flex justify-between items-start" style={{ marginBottom: 12 }}>
-            <div style={{ padding: 8, borderRadius: 10, background: `${color}15`, color }}>
+            <div style={{ padding: 8, borderRadius: 10, background: `${color}12`, color }}>
                 <Icon size={16} />
             </div>
             {trend && (
@@ -62,14 +62,14 @@ const Dashboard = () => {
                     </div>
                 </div>
                 {/* Glow effect */}
-                <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, background: 'radial-gradient(circle, rgba(59,130,246,0.12), transparent 70%)', pointerEvents: 'none', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, background: 'radial-gradient(circle, rgba(37,99,235,0.1), transparent 70%)', pointerEvents: 'none', borderRadius: '50%' }} />
             </div>
 
             {/* Stats Row */}
             <div className="flex gap-3 overflow-x-auto scrollbar-hide" style={{ paddingBottom: 4 }}>
                 <StatCard label="Daily ROI" value={`${(8.5).toFixed(1)}%`} icon={Zap} color="var(--accent)" trend={12.5} />
                 <StatCard label="Total Earned" value={`₹${totalEarning.toLocaleString()}`} icon={TrendingUp} color="var(--success)" />
-                <StatCard label="Active Plans" value="3" icon={Layers} color="var(--primary-blue)" />
+                <StatCard label="Active Plans" value="3" icon={Layers} color="var(--accent-dark)" />
             </div>
 
             {/* Yield Programs */}
@@ -82,7 +82,7 @@ const Dashboard = () => {
                 <div className="glass-card" style={{ padding: 20 }}>
                     <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
                         <div className="flex items-center gap-3">
-                            <div style={{ width: 42, height: 42, borderRadius: 14, background: 'rgba(59,130,246,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ width: 42, height: 42, borderRadius: 14, background: 'rgba(37,99,235,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Zap size={20} style={{ color: 'var(--accent)' }} />
                             </div>
                             <div>
@@ -122,7 +122,7 @@ const Dashboard = () => {
                                 <div className="flex items-center gap-3">
                                     <div style={{
                                         width: 38, height: 38, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        background: item.type === 'success' ? 'rgba(34,197,94,0.1)' : 'rgba(100,116,139,0.1)',
+                                        background: item.type === 'success' ? 'rgba(22,163,74,0.08)' : 'rgba(37,99,235,0.06)',
                                         color: item.type === 'success' ? 'var(--success)' : 'var(--text-muted)'
                                     }}>
                                         {item.type === 'success' ? <ArrowUpRight size={18} /> : <History size={18} />}

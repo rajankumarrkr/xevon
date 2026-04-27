@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const StatsBox = ({ label, value, icon: Icon }) => (
     <div className="glass-card" style={{ flex: '1 1 0%', padding: '18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div style={{ padding: 10, borderRadius: 14, background: 'var(--bg-glass)', border: '1px solid rgba(255,255,255,0.04)', width: 'fit-content', color: 'var(--accent)' }}>
+        <div style={{ padding: 10, borderRadius: 14, background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.08)', width: 'fit-content', color: 'var(--accent)' }}>
             <Icon size={18} />
         </div>
         <div>
@@ -48,19 +48,19 @@ const Refer = () => {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="glass-card text-center"
-                style={{ padding: '36px 24px', background: 'linear-gradient(135deg, rgba(0,229,255,0.06), rgba(15,25,50,0.8))', position: 'relative', overflow: 'hidden' }}
+                style={{ padding: '36px 24px', background: 'linear-gradient(135deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02))', position: 'relative', overflow: 'hidden' }}
             >
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     <div className="flex justify-center" style={{ marginBottom: 24 }}>
                         <div style={{ position: 'relative' }}>
-                            <div style={{ padding: 24, borderRadius: '50%', background: 'var(--bg-glass)', border: '1px solid rgba(0,229,255,0.15)' }}>
+                            <div style={{ padding: 24, borderRadius: '50%', background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.12)' }}>
                                 <Users2 size={48} style={{ color: 'var(--accent)' }} />
                             </div>
                             {/* Pulse ring */}
                             <motion.div
                                 animate={{ scale: [1, 1.5], opacity: [0.3, 0] }}
                                 transition={{ duration: 2, repeat: Infinity }}
-                                style={{ position: 'absolute', inset: -8, borderRadius: '50%', border: '1px solid rgba(0,229,255,0.2)' }}
+                                style={{ position: 'absolute', inset: -8, borderRadius: '50%', border: '1px solid rgba(37,99,235,0.15)' }}
                             />
                         </div>
                     </div>
@@ -71,9 +71,9 @@ const Refer = () => {
                     </p>
 
                     <p style={{ fontSize: 10, color: 'var(--accent)', fontWeight: 800, letterSpacing: '1.5px', marginBottom: 10 }}>YOUR REFERRAL CODE</p>
-                    <div className="flex justify-between items-center" style={{ padding: '14px 18px', borderRadius: 16, background: 'rgba(5,10,25,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <span className="outfit" style={{ fontWeight: 900, fontSize: '1.2rem', letterSpacing: 2 }}>{user?.referralCode}</span>
-                        <button onClick={handleCopy} style={{ padding: 10, borderRadius: 12, background: copied ? 'var(--success)' : 'var(--accent)', color: '#0B1D3A', border: 'none', transition: 'all 0.25s' }}>
+                    <div className="flex justify-between items-center" style={{ padding: '14px 18px', borderRadius: 16, background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(37,99,235,0.1)' }}>
+                        <span className="outfit" style={{ fontWeight: 900, fontSize: '1.2rem', letterSpacing: 2, color: 'var(--text-primary)' }}>{user?.referralCode}</span>
+                        <button onClick={handleCopy} style={{ padding: 10, borderRadius: 12, background: copied ? 'var(--success)' : 'var(--accent)', color: '#ffffff', border: 'none', transition: 'all 0.25s' }}>
                             {copied ? <CheckCircle2 size={18} /> : <Copy size={18} />}
                         </button>
                     </div>
@@ -101,7 +101,7 @@ const Refer = () => {
                         { icon: TrendingUp, title: 'Earn Rewards', desc: 'Receive 10% of their investment value instantly.' }
                     ].map((step, i) => (
                         <div key={i} className="flex items-start gap-4">
-                            <div style={{ padding: 12, borderRadius: 14, background: 'var(--bg-glass)', color: 'var(--accent)', flexShrink: 0 }}>
+                            <div style={{ padding: 12, borderRadius: 14, background: 'rgba(37,99,235,0.06)', color: 'var(--accent)', flexShrink: 0 }}>
                                 <step.icon size={20} />
                             </div>
                             <div>

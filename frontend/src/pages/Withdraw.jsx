@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { transactionService } from '../services';
 import { motion } from 'framer-motion';
 import { Wallet, ArrowLeft, ShieldCheck, Clock, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const Withdraw = () => {
         if (amount > user.walletBalance) { alert('Insufficient balance.'); return; }
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/transactions/withdraw', { amount, upi });
+            await transactionService.withdraw(amount, upi);
             setSuccess(true);
         } catch (err) { alert(err.response?.data?.message || 'Withdrawal failed'); }
         finally { setLoading(false); }
@@ -26,7 +26,7 @@ const Withdraw = () => {
     if (success) {
         return (
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-card flex flex-col items-center text-center" style={{ padding: 40, marginTop: 40, gap: 20 }}>
-                <div style={{ padding: 20, borderRadius: '50%', background: 'rgba(59,130,246,0.1)' }}>
+                <div style={{ padding: 20, borderRadius: '50%', background: 'rgba(37,99,235,0.08)' }}>
                     <Clock size={48} style={{ color: 'var(--accent)' }} />
                 </div>
                 <div>
@@ -45,13 +45,13 @@ const Withdraw = () => {
                     <p style={{ fontSize: 10, color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 4 }}>Payout Account</p>
                     <h1 className="outfit" style={{ fontSize: '1.8rem', fontWeight: 900 }}>Withdraw</h1>
                 </div>
-                <Link to="/" style={{ padding: 12, borderRadius: 14, background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', display: 'flex' }}>
+                <Link to="/" style={{ padding: 12, borderRadius: 14, background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(37,99,235,0.08)', color: 'var(--text-secondary)', display: 'flex' }}>
                     <ArrowLeft size={20} />
                 </Link>
             </div>
 
             {/* Balance Card */}
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="glass-card" style={{ padding: 24, background: 'rgba(0,0,0,0.03)' }}>
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="glass-card" style={{ padding: 24 }}>
                 <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.2px', marginBottom: 10 }}>Available for Withdrawal</p>
                 <div className="flex items-baseline gap-2" style={{ marginBottom: 14 }}>
                     <span style={{ fontSize: '1.2rem', fontWeight: 700, opacity: 0.3 }}>₹</span>
@@ -84,10 +84,10 @@ const Withdraw = () => {
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3" style={{ padding: '14px 16px', borderRadius: 14, background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.1)' }}>
-                    <AlertCircle size={16} style={{ color: '#f59e0b', marginTop: 2, flexShrink: 0 }} />
+                <div className="flex items-start gap-3" style={{ padding: '14px 16px', borderRadius: 14, background: 'rgba(217,119,6,0.05)', border: '1px solid rgba(217,119,6,0.1)' }}>
+                    <AlertCircle size={16} style={{ color: 'var(--warning)', marginTop: 2, flexShrink: 0 }} />
                     <div>
-                        <p style={{ fontSize: 10, fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', marginBottom: 4 }}>Withdrawal Policy</p>
+                        <p style={{ fontSize: 10, fontWeight: 800, color: 'var(--warning)', textTransform: 'uppercase', marginBottom: 4 }}>Withdrawal Policy</p>
                         <p style={{ fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Processing window: 10 AM - 6 PM. High-value withdrawals may require extra verification.</p>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ import Profile from './pages/Profile';
 import Deposit from './pages/Deposit';
 import Withdraw from './pages/Withdraw';
 import History from './pages/History';
+import Settings from './pages/Settings';
 
 // Admin Components
 import AdminLayout from './components/AdminLayout';
@@ -43,6 +44,7 @@ function App() {
             <Route path="deposit" element={<Deposit />} />
             <Route path="withdraw" element={<Withdraw />} />
             <Route path="history" element={<History />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
 
           {/* Admin Login (Public) */}

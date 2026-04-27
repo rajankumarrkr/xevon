@@ -47,13 +47,16 @@ const Register = () => {
                         <h1 className="outfit" style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-1px' }}>Create Account</h1>
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 500, marginTop: 4 }}>Join the XEVON platform</p>
                     </div>
-                    <div style={{ padding: 12, borderRadius: 16, background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)' }}>
+                    <div style={{
+                        padding: 12, borderRadius: 16,
+                        background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.1)'
+                    }}>
                         <UserPlus size={28} style={{ color: 'var(--accent)' }} />
                     </div>
                 </div>
 
                 {error && (
-                    <div style={{ padding: '12px 16px', marginBottom: 20, borderRadius: 12, background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.2)', color: '#fb7185', fontSize: '0.8rem', fontWeight: 600, textAlign: 'center' }}>
+                    <div style={{ padding: '12px 16px', marginBottom: 20, borderRadius: 14, background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.15)', color: 'var(--error)', fontSize: '0.8rem', fontWeight: 600, textAlign: 'center' }}>
                         {error}
                     </div>
                 )}
@@ -85,7 +88,7 @@ const Register = () => {
                     </button>
 
                     <div className="flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)', fontSize: 10, fontWeight: 600 }}>
-                        <ShieldCheck size={14} style={{ color: 'rgba(0,229,255,0.5)' }} />
+                        <ShieldCheck size={14} style={{ color: 'var(--accent)' }} />
                         Secure Enrollment Protocol
                     </div>
                 </form>

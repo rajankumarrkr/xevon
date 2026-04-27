@@ -39,7 +39,7 @@ const AdminTransactions = () => {
                     <button key={f} onClick={() => setFilter(f)} style={{
                         padding: '10px 20px', borderRadius: 12, fontWeight: 700, fontSize: 11, letterSpacing: '1px',
                         textTransform: 'uppercase', transition: 'all 0.2s', whiteSpace: 'nowrap', border: 'none',
-                        background: filter === f ? 'var(--accent)' : 'var(--bg-glass)', color: filter === f ? '#0B1D3A' : 'var(--text-muted)'
+                        background: filter === f ? 'var(--accent)' : 'rgba(37,99,235,0.04)', color: filter === f ? '#fff' : 'var(--text-muted)'
                     }}>{f}</button>
                 ))}
             </div>

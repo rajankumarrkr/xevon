@@ -1,12 +1,24 @@
 import React from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutDashboard, Layers, Share2, User, Wallet, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Layout = () => {
     const location = useLocation();
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center" style={{ minHeight: '100vh', background: 'var(--bg-main)' }}>
+                <div style={{ width: 32, height: 32, border: '3px solid var(--accent)', borderTopColor: 'transparent', borderRadius: '50%' }} className="animate-spin" />
+            </div>
+        );
+    }
+
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
 
     const navItems = [
         { path: '/', icon: LayoutDashboard, label: 'Home' },
@@ -23,17 +35,17 @@ const Layout = () => {
             <header className="flex items-center justify-between relative z-10" style={{ padding: '20px 20px 8px' }}>
                 <div className="flex items-center gap-3">
                     <div style={{ width: 36, height: 36, borderRadius: 12, background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span className="outfit" style={{ fontSize: '1rem', fontWeight: 900, color: '#0B1D3A' }}>X</span>
+                        <span className="outfit" style={{ fontSize: '1rem', fontWeight: 900, color: '#ffffff' }}>X</span>
                     </div>
-                    <h1 className="outfit" style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.5px' }}>XEVON</h1>
+                    <h1 className="outfit" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>XEVON</h1>
                 </div>
                 <div className="flex items-center gap-3">
                     <div style={{ width: 40, height: 40, borderRadius: 14, background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Bell size={18} style={{ color: 'var(--text-secondary)' }} />
                     </div>
-                    <div style={{ width: 40, height: 40, borderRadius: 14, overflow: 'hidden', border: '2px solid rgba(0,229,255,0.2)' }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 14, overflow: 'hidden', border: '2px solid rgba(59,130,246,0.2)' }}>
                         <img
-                            src={`https://ui-avatars.com/api/?name=${user?.name || 'U'}&background=0B1D3A&color=00E5FF&bold=true&size=80`}
+                            src={`https://ui-avatars.com/api/?name=${user?.name || 'U'}&background=EFF6FF&color=3B82F6&bold=true&size=80`}
                             alt="avatar"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
@@ -44,7 +56,7 @@ const Layout = () => {
             {/* Greeting */}
             <div className="relative z-10" style={{ padding: '12px 20px 4px' }}>
                 <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Welcome back,</p>
-                <p className="outfit" style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fff' }}>{user?.name || 'Guest'}</p>
+                <p className="outfit" style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)' }}>{user?.name || 'Guest'}</p>
             </div>
 
             {/* Main Content */}
@@ -78,7 +90,7 @@ const Layout = () => {
                             >
                                 <div style={{
                                     padding: 8, borderRadius: 12,
-                                    background: isActive ? 'rgba(0,229,255,0.1)' : 'transparent',
+                                    background: isActive ? 'rgba(59,130,246,0.1)' : 'transparent',
                                     transition: 'background 0.25s'
                                 }}>
                                     <item.icon size={22} strokeWidth={isActive ? 2.5 : 1.8} style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }} />
@@ -87,7 +99,7 @@ const Layout = () => {
                                 {isActive && (
                                     <motion.div
                                         layoutId="nav-indicator"
-                                        style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 10px #00E5FF' }}
+                                        style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 10px rgba(59,130,246,0.4)' }}
                                     />
                                 )}
                             </motion.div>

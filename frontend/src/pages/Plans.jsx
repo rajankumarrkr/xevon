@@ -18,17 +18,17 @@ const PlanCard = ({ plan, onPurchase, loading }) => (
                     <p style={{ fontSize: 10, color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: 4 }}>Growth Program</p>
                     <h2 className="outfit" style={{ fontSize: '1.2rem', fontWeight: 800 }}>{plan.name}</h2>
                 </div>
-                <div style={{ padding: 12, borderRadius: 14, background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ padding: 12, borderRadius: 14, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(0,0,0,0.05)' }}>
                     <Zap size={22} style={{ color: 'var(--accent)' }} />
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3" style={{ marginBottom: 18 }}>
-                <div style={{ padding: '14px', borderRadius: 14, background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ padding: '14px', borderRadius: 14, background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.04)' }}>
                     <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, marginBottom: 4 }}>Daily Yield</p>
                     <p className="outfit" style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--success)' }}>{plan.dailyPercent}%</p>
                 </div>
-                <div style={{ padding: '14px', borderRadius: 14, background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ padding: '14px', borderRadius: 14, background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.04)' }}>
                     <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, marginBottom: 4 }}>Duration</p>
                     <p className="outfit" style={{ fontSize: '1.2rem', fontWeight: 900 }}>{plan.durationDays}D</p>
                 </div>
@@ -43,7 +43,7 @@ const PlanCard = ({ plan, onPurchase, loading }) => (
                     <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>Max Limit</span>
                     <span style={{ fontSize: 11, fontWeight: 700 }}>₹{plan.maxAmount.toLocaleString()}</span>
                 </div>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 10 }}>
+                <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 10 }}>
                     <div className="flex justify-between items-center">
                         <span style={{ fontSize: 10, color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase' }}>Est. Return</span>
                         <span className="outfit" style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--success)' }}>₹{(plan.minAmount * plan.dailyPercent / 100).toLocaleString()}/Day</span>

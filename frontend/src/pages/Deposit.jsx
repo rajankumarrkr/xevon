@@ -34,7 +34,7 @@ const Deposit = () => {
     if (success) {
         return (
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-card flex flex-col items-center text-center" style={{ padding: 40, marginTop: 40, gap: 20 }}>
-                <div style={{ padding: 20, borderRadius: '50%', background: 'rgba(0,229,255,0.1)' }}>
+                <div style={{ padding: 20, borderRadius: '50%', background: 'rgba(59,130,246,0.1)' }}>
                     <CheckCircle2 size={48} style={{ color: 'var(--accent)' }} />
                 </div>
                 <div>
@@ -62,7 +62,7 @@ const Deposit = () => {
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="glass-card" style={{ padding: 22 }}>
                 <div className="flex justify-between items-center" style={{ marginBottom: 18 }}>
                     <div className="flex items-center gap-3">
-                        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(0,229,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(59,130,246,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <QrCode size={20} style={{ color: 'var(--accent)' }} />
                         </div>
                         <span className="outfit" style={{ fontWeight: 700, fontSize: '0.95rem' }}>UPI Transfer</span>
@@ -73,17 +73,17 @@ const Deposit = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center" style={{ padding: '16px 18px', borderRadius: 16, background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div className="flex justify-between items-center" style={{ padding: '16px 18px', borderRadius: 16, background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.04)' }}>
                     <div>
                         <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, marginBottom: 2 }}>UPI ID</p>
                         <p className="outfit" style={{ fontSize: '1.05rem', fontWeight: 800, letterSpacing: '0.5px' }}>xevon.prem@upi</p>
                     </div>
-                    <button onClick={handleCopy} style={{ padding: 10, borderRadius: 12, background: copied ? 'var(--accent)' : 'rgba(30,41,59,0.8)', color: copied ? '#0B1D3A' : 'var(--accent)', transition: 'all 0.25s', border: 'none' }}>
+                    <button onClick={handleCopy} style={{ padding: 10, borderRadius: 12, background: copied ? 'var(--accent)' : 'rgba(0,0,0,0.05)', color: copied ? '#ffffff' : 'var(--accent)', transition: 'all 0.25s', border: 'none' }}>
                         <Copy size={18} />
                     </button>
                 </div>
 
-                <div className="flex items-start gap-3" style={{ marginTop: 16, padding: '12px 14px', borderRadius: 12, background: 'rgba(0,229,255,0.04)', border: '1px solid rgba(0,229,255,0.08)' }}>
+                <div className="flex items-start gap-3" style={{ marginTop: 16, padding: '12px 14px', borderRadius: 12, background: 'rgba(59,130,246,0.04)', border: '1px solid rgba(59,130,246,0.08)' }}>
                     <Info size={16} style={{ color: 'var(--accent)', marginTop: 2, flexShrink: 0 }} />
                     <p style={{ fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                         Send the amount to the UPI ID above and upload the confirmation screenshot.
@@ -101,7 +101,7 @@ const Deposit = () => {
                 <div>
                     <label style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '1.2px', textTransform: 'uppercase', display: 'block', marginBottom: 8, marginLeft: 2 }}>Payment Screenshot</label>
                     <input type="file" id="file-upload" style={{ display: 'none' }} accept="image/*" onChange={(e) => setProof(e.target.files[0])} />
-                    <label htmlFor="file-upload" className="glass-card flex flex-col items-center justify-center" style={{ padding: '36px 20px', cursor: 'pointer', borderStyle: 'dashed', borderWidth: 2, borderColor: proof ? 'rgba(0,229,255,0.3)' : 'rgba(255,255,255,0.06)', background: proof ? 'rgba(0,229,255,0.03)' : 'var(--bg-card)' }}>
+                    <label htmlFor="file-upload" className="glass-card flex flex-col items-center justify-center" style={{ padding: '36px 20px', cursor: 'pointer', borderStyle: 'dashed', borderWidth: 2, borderColor: proof ? 'rgba(59,130,246,0.3)' : 'rgba(0,0,0,0.06)', background: proof ? 'rgba(59,130,246,0.03)' : 'var(--bg-card)' }}>
                         <UploadCloud size={28} style={{ color: proof ? 'var(--accent)' : 'var(--text-muted)' }} />
                         <p className="outfit" style={{ fontSize: '0.85rem', fontWeight: 700, marginTop: 10 }}>{proof ? proof.name : 'Choose File'}</p>
                         <span style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 600, marginTop: 4 }}>JPEG, PNG (MAX 5MB)</span>

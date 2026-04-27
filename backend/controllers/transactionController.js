@@ -6,7 +6,13 @@ import User from '../models/User.js';
 // @access  Private
 export const deposit = async (req, res) => {
     try {
-        const { amount, proofImage } = req.body;
+        const { amount } = req.body;
+
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Payment screenshot is required' });
+        }
+        
+        const proofImage = req.file.path;
 
         if (!amount || amount <= 0) {
             return res.status(400).json({ success: false, message: 'Invalid amount' });

@@ -67,8 +67,8 @@ const AdminPlans = () => {
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => handleEdit(plan)} style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid rgba(255,255,255,0.04)', color: 'var(--accent)' }}><Edit3 size={16} /></button>
-                                    <button style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid rgba(255,255,255,0.04)', color: 'var(--error)' }}><Trash2 size={16} /></button>
+                                    <button onClick={() => handleEdit(plan)} style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid rgba(0,0,0,0.04)', color: 'var(--accent)' }}><Edit3 size={16} /></button>
+                                    <button style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid rgba(0,0,0,0.04)', color: 'var(--error)' }}><Trash2 size={16} /></button>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ const AdminPlans = () => {
                 {/* Editor */}
                 <AnimatePresence>
                     {editingPlan && (
-                        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} className="glass-card" style={{ padding: 28, border: '1px solid rgba(0,229,255,0.1)' }}>
+                        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} className="glass-card" style={{ padding: 28, border: '1px solid rgba(59,130,246,0.1)' }}>
                             <div className="flex justify-between items-center" style={{ marginBottom: 24 }}>
                                 <div className="flex items-center gap-3">
                                     <Layers style={{ color: 'var(--accent)' }} size={20} />
@@ -111,14 +111,14 @@ const AdminPlans = () => {
                                         <input type="number" className="premium-input" style={{ fontWeight: 700 }} value={formData.durationDays} onChange={(e) => setFormData({...formData, durationDays: e.target.value})} required />
                                     </div>
                                 </div>
-                                <div className="flex justify-between items-center" style={{ padding: '14px 16px', borderRadius: 14, background: 'rgba(255,255,255,0.03)' }}>
+                                <div className="flex justify-between items-center" style={{ padding: '14px 16px', borderRadius: 14, background: 'rgba(0,0,0,0.03)' }}>
                                     <div className="flex items-center gap-3">
                                         <Activity size={16} style={{ color: 'var(--accent)' }} />
                                         <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</span>
                                     </div>
                                     <div onClick={() => setFormData({...formData, isActive: !formData.isActive})} style={{
                                         width: 48, height: 26, borderRadius: 20, padding: 3, cursor: 'pointer', transition: 'all 0.25s',
-                                        background: formData.isActive ? 'var(--accent)' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)'
+                                        background: formData.isActive ? 'var(--accent)' : 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.1)'
                                     }}>
                                         <motion.div animate={{ x: formData.isActive ? 22 : 0 }} style={{ width: 20, height: 20, borderRadius: '50%', background: '#0B1D3A' }} />
                                     </div>

@@ -9,7 +9,7 @@ const AdminStat = ({ label, value, icon: Icon, color }) => (
     <motion.div whileHover={{ y: -4 }} className="glass-card" style={{ padding: 24 }}>
         <div className="flex justify-between items-start" style={{ marginBottom: 18 }}>
             <div style={{ padding: 12, borderRadius: 14, background: `${color}12`, color }}><Icon size={24} /></div>
-            <span style={{ fontSize: 9, fontWeight: 800, color: 'var(--text-muted)', padding: '4px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.04)' }}>LIVE</span>
+            <span style={{ fontSize: 9, fontWeight: 800, color: 'var(--text-muted)', padding: '4px 10px', borderRadius: 20, background: 'rgba(0,0,0,0.04)' }}>LIVE</span>
         </div>
         <p style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '1.5px', marginBottom: 6 }}>{label}</p>
         <h2 className="outfit" style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.5px' }}>{value}</h2>

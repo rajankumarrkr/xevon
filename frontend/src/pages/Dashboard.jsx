@@ -62,7 +62,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 {/* Glow effect */}
-                <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, background: 'radial-gradient(circle, rgba(0,229,255,0.12), transparent 70%)', pointerEvents: 'none', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, background: 'radial-gradient(circle, rgba(59,130,246,0.12), transparent 70%)', pointerEvents: 'none', borderRadius: '50%' }} />
             </div>
 
             {/* Stats Row */}
@@ -82,7 +82,7 @@ const Dashboard = () => {
                 <div className="glass-card" style={{ padding: 20 }}>
                     <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
                         <div className="flex items-center gap-3">
-                            <div style={{ width: 42, height: 42, borderRadius: 14, background: 'rgba(0,229,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ width: 42, height: 42, borderRadius: 14, background: 'rgba(59,130,246,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Zap size={20} style={{ color: 'var(--accent)' }} />
                             </div>
                             <div>

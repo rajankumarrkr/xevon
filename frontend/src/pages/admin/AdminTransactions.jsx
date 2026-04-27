@@ -70,14 +70,14 @@ const AdminTransactions = () => {
                             </div>
                         </div>
 
-                        <div className="flex justify-between items-center" style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: 10 }}>
+                        <div className="flex justify-between items-center" style={{ borderTop: '1px solid rgba(0,0,0,0.04)', paddingTop: 10 }}>
                             <div className="flex items-center gap-2">
                                 <span style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: tx.type === 'deposit' ? 'var(--success)' : 'var(--error)' }}>{tx.type}</span>
                                 <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>• {new Date(tx.createdAt).toLocaleDateString()}</span>
                             </div>
                             <div className="flex gap-2">
                                 {tx.type === 'deposit' && tx.proofImage && (
-                                    <a href={tx.proofImage} target="_blank" rel="noreferrer" style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid rgba(255,255,255,0.04)', color: 'var(--accent)', display: 'flex' }}>
+                                    <a href={tx.proofImage} target="_blank" rel="noreferrer" style={{ padding: 8, borderRadius: 10, background: 'var(--bg-glass)', border: '1px solid rgba(0,0,0,0.04)', color: 'var(--accent)', display: 'flex' }}>
                                         <ExternalLink size={14} />
                                     </a>
                                 )}

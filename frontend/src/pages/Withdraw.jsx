@@ -26,7 +26,7 @@ const Withdraw = () => {
     if (success) {
         return (
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-card flex flex-col items-center text-center" style={{ padding: 40, marginTop: 40, gap: 20 }}>
-                <div style={{ padding: 20, borderRadius: '50%', background: 'rgba(0,229,255,0.1)' }}>
+                <div style={{ padding: 20, borderRadius: '50%', background: 'rgba(59,130,246,0.1)' }}>
                     <Clock size={48} style={{ color: 'var(--accent)' }} />
                 </div>
                 <div>
@@ -51,7 +51,7 @@ const Withdraw = () => {
             </div>
 
             {/* Balance Card */}
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="glass-card" style={{ padding: 24, background: 'rgba(15,23,42,0.5)' }}>
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="glass-card" style={{ padding: 24, background: 'rgba(0,0,0,0.03)' }}>
                 <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.2px', marginBottom: 10 }}>Available for Withdrawal</p>
                 <div className="flex items-baseline gap-2" style={{ marginBottom: 14 }}>
                     <span style={{ fontSize: '1.2rem', fontWeight: 700, opacity: 0.3 }}>₹</span>

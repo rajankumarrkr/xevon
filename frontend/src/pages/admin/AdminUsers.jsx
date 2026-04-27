@@ -74,8 +74,8 @@ const AdminUsers = () => {
                                     <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, marginBottom: 2 }}>BALANCE</p>
                                     <p className="outfit" style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--accent)' }}>₹{u.walletBalance.toLocaleString()}</p>
                                 </div>
-                                <button onClick={() => setSelectedUser(u)} style={{ padding: 10, borderRadius: 12, background: 'var(--bg-glass)', border: '1px solid rgba(255,255,255,0.04)', color: 'var(--accent)' }}><Coins size={18} /></button>
-                                <button onClick={() => handleToggleStatus(u._id, u.status)} style={{ padding: 10, borderRadius: 12, background: 'var(--bg-glass)', border: `1px solid ${u.status === 'active' ? 'rgba(255,255,255,0.04)' : 'rgba(244,63,94,0.2)'}`, color: u.status === 'active' ? 'var(--text-muted)' : 'var(--error)' }}>
+                                <button onClick={() => setSelectedUser(u)} style={{ padding: 10, borderRadius: 12, background: 'var(--bg-glass)', border: '1px solid rgba(0,0,0,0.04)', color: 'var(--accent)' }}><Coins size={18} /></button>
+                                <button onClick={() => handleToggleStatus(u._id, u.status)} style={{ padding: 10, borderRadius: 12, background: 'var(--bg-glass)', border: `1px solid ${u.status === 'active' ? 'rgba(0,0,0,0.04)' : 'rgba(244,63,94,0.2)'}`, color: u.status === 'active' ? 'var(--text-muted)' : 'var(--error)' }}>
                                     {u.status === 'active' ? <Shield size={18} /> : <ShieldOff size={18} />}
                                 </button>
                             </div>
@@ -87,7 +87,7 @@ const AdminUsers = () => {
             {/* Balance Modal */}
             <AnimatePresence>
                 {selectedUser && (
-                    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'rgba(6,11,24,0.92)', backdropFilter: 'blur(12px)' }}>
+                    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)' }}>
                         <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} className="glass-card" style={{ padding: 32, width: '100%', maxWidth: 420, position: 'relative' }}>
                             <button onClick={() => setSelectedUser(null)} style={{ position: 'absolute', top: 20, right: 20, color: 'var(--text-muted)', background: 'none', border: 'none' }}><X size={22} /></button>
                             <div className="text-center" style={{ marginBottom: 28 }}>

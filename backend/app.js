@@ -9,6 +9,7 @@ import investmentRoutes from './routes/investmentRoutes.js';
 import transactionRoutes from './routes/transactionRoutes.js';
 import referralRoutes from './routes/referralRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import configRoutes from './routes/configRoutes.js';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use('/api/investments', investmentRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/referrals', referralRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/config', configRoutes);
 
 // Test Route
 app.get('/api/test', (req, res) => {

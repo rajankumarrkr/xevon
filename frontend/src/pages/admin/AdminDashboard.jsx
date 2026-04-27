@@ -51,8 +51,8 @@ const AdminDashboard = () => {
                     <AdminStat label="TOTAL USERS" value={stats.totalUsers || 0} icon={Users} color="var(--accent)" />
                     <AdminStat label="DEPOSITS" value={`₹${(stats.totalDeposits || 0).toLocaleString()}`} icon={ArrowDownCircle} color="var(--success)" />
                     <AdminStat label="WITHDRAWALS" value={`₹${(stats.totalWithdrawals || 0).toLocaleString()}`} icon={ArrowUpCircle} color="var(--error)" />
-                    <AdminStat label="INVESTMENTS" value={`₹${(stats.activeInvestments || 0).toLocaleString()}`} icon={TrendingUp} color="#FACC15" />
-                    <AdminStat label="LIQUIDITY" value={`₹${(stats.platformLiquidity || 0).toLocaleString()}`} icon={Wallet} color="var(--primary-blue)" />
+                    <AdminStat label="INVESTMENTS" value={`₹${(stats.activeInvestments || 0).toLocaleString()}`} icon={TrendingUp} color="var(--warning)" />
+                    <AdminStat label="LIQUIDITY" value={`₹${(stats.platformLiquidity || 0).toLocaleString()}`} icon={Wallet} color="var(--accent-dark)" />
                 </div>
             ) : (
                 <div className="glass-card flex items-center justify-center" style={{ padding: 40, color: 'var(--text-muted)' }}>
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="flex gap-4">
                         <div className="flex items-center gap-2" style={{ fontSize: 11, fontWeight: 700 }}>
-                            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 6px #00E5FF' }} /> Inflow
+                            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 6px var(--accent)' }} /> Inflow
                         </div>
                         <div className="flex items-center gap-2" style={{ fontSize: 11, fontWeight: 700 }}>
                             <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--success)' }} /> Profit

@@ -116,7 +116,7 @@ const AdminPlans = () => {
                                     </div>
                                     <div onClick={() => setFormData({...formData, isActive: !formData.isActive})} style={{
                                         width: 48, height: 26, borderRadius: 20, padding: 3, cursor: 'pointer', transition: 'all 0.25s',
-                                        background: formData.isActive ? 'var(--accent)' : 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.1)'
+                                        background: formData.isActive ? 'var(--accent)' : 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.1)'
                                     }}>
                                         <motion.div animate={{ x: formData.isActive ? 22 : 0 }} style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }} />
                                     </div>

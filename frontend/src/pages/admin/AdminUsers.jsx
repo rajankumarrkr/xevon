@@ -85,7 +85,7 @@ const AdminUsers = () => {
             {/* Balance Modal */}
             <AnimatePresence>
                 {selectedUser && (
-                    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)' }}>
+                    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'rgba(239, 246, 255, 0.85)', backdropFilter: 'blur(12px)' }}>
                         <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} className="glass-card" style={{ padding: 32, width: '100%', maxWidth: 420, position: 'relative' }}>
                             <button onClick={() => setSelectedUser(null)} style={{ position: 'absolute', top: 20, right: 20, color: 'var(--text-muted)', background: 'none', border: 'none' }}><X size={22} /></button>
                             <div className="text-center" style={{ marginBottom: 28 }}>

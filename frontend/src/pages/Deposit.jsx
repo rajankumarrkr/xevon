@@ -1,18 +1,36 @@
 import React, { useState } from 'react';
 import { transactionService } from '../services';
+import api from '../services/api';
 import { motion } from 'framer-motion';
 import { QrCode, UploadCloud, Info, ArrowLeft, CheckCircle2, Copy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Deposit = () => {
+    const [upiId, setUpiId] = useState('xevon.prem@upi');
+    const [qrImage, setQrImage] = useState('');
     const [amount, setAmount] = useState('');
     const [proof, setProof] = useState(null);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [copied, setCopied] = useState(false);
 
+    React.useEffect(() => {
+        const fetchConfig = async () => {
+            try {
+                const { data } = await api.get('/config');
+                if (data.success) {
+                    if (data.data.upiId) setUpiId(data.data.upiId);
+                    if (data.data.qrImage) setQrImage(data.data.qrImage);
+                }
+            } catch (err) {
+                console.error('Config fetch failed');
+            }
+        };
+        fetchConfig();
+    }, []);
+
     const handleCopy = () => {
-        navigator.clipboard.writeText('xevon.prem@upi');
+        navigator.clipboard.writeText(upiId);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -42,6 +60,8 @@ const Deposit = () => {
             </motion.div>
         );
     }
+
+    const serverUrl = api.defaults.baseURL.replace('/api', '');
 
     return (
         <div className="flex flex-col" style={{ gap: 28, paddingBottom: 100 }}>
@@ -73,17 +93,36 @@ const Deposit = () => {
                 <div className="flex justify-between items-center" style={{ padding: '16px 18px', borderRadius: 16, background: 'rgba(37,99,235,0.03)', border: '1px solid rgba(37,99,235,0.06)' }}>
                     <div>
                         <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 700, marginBottom: 2 }}>UPI ID</p>
-                        <p className="outfit" style={{ fontSize: '1.05rem', fontWeight: 800, letterSpacing: '0.5px' }}>xevon.prem@upi</p>
+                        <p className="outfit" style={{ fontSize: '1.05rem', fontWeight: 800, letterSpacing: '0.5px' }}>{upiId}</p>
                     </div>
                     <button onClick={handleCopy} style={{ padding: 10, borderRadius: 12, background: copied ? 'var(--accent)' : 'rgba(37,99,235,0.06)', color: copied ? '#ffffff' : 'var(--accent)', transition: 'all 0.25s', border: 'none' }}>
                         <Copy size={18} />
                     </button>
                 </div>
 
+                {/* QR Code */}
+                <div className="flex flex-col items-center" style={{ marginTop: 20, padding: '24px 16px', borderRadius: 16, background: '#ffffff', border: '1px solid rgba(37,99,235,0.08)' }}>
+                    <p style={{ fontSize: 10, fontWeight: 800, color: 'var(--accent)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 16 }}>Scan to Pay</p>
+                    <div style={{
+                        padding: 12, borderRadius: 16, background: '#fff',
+                        border: '2px solid rgba(37,99,235,0.12)',
+                        boxShadow: '0 4px 20px rgba(37,99,235,0.08)'
+                    }}>
+                        <img
+                            src={qrImage && (qrImage.startsWith('http') || qrImage.startsWith('https')) ? qrImage : qrImage ? `${serverUrl}/${qrImage}` : `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=XEVON&cu=INR`)}`}
+                            alt="UPI QR Code"
+                            style={{ width: 180, height: 180, borderRadius: 8, objectFit: 'contain' }}
+                        />
+                    </div>
+                    <p style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, marginTop: 14 }}>
+                        Scan with any UPI app (GPay, PhonePe, Paytm)
+                    </p>
+                </div>
+
                 <div className="flex items-start gap-3" style={{ marginTop: 16, padding: '12px 14px', borderRadius: 12, background: 'rgba(37,99,235,0.03)', border: '1px solid rgba(37,99,235,0.06)' }}>
                     <Info size={16} style={{ color: 'var(--accent)', marginTop: 2, flexShrink: 0 }} />
                     <p style={{ fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                        Send the amount to the UPI ID above and upload the confirmation screenshot.
+                        Scan the QR or send to the UPI ID above, then upload the confirmation screenshot.
                     </p>
                 </div>
             </motion.div>

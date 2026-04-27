@@ -25,6 +25,7 @@ import AdminTransactions from './pages/admin/AdminTransactions';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminPlans from './pages/admin/AdminPlans';
 import AdminLogin from './pages/admin/AdminLogin';
+import AdminSettings from './pages/admin/AdminSettings';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
             <Route path="transactions" element={<AdminTransactions />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="plans" element={<AdminPlans />} />
+            <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
       </Router>

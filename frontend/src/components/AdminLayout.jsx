@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Users, CreditCard, Layers, ArrowLeft, BarChart3, Terminal, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, Layers, ArrowLeft, BarChart3, Terminal, Menu, X, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminLayout = () => {
@@ -18,6 +18,7 @@ const AdminLayout = () => {
         { path: '/admin/transactions', icon: CreditCard, label: 'Transactions' },
         { path: '/admin/users', icon: Users, label: 'Users' },
         { path: '/admin/plans', icon: Layers, label: 'Plans' },
+        { path: '/admin/settings', icon: Settings, label: 'App Settings' },
     ];
 
     const Sidebar = ({ mobile }) => (

@@ -1,0 +1,7 @@
+/* Global Reset — theme.css handles everything else */
+@import './styles/theme.css';
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

@@ -1,17 +1,12 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import authService from '../services/authService';
 
 const AuthContext = createContext();
-
-const API_URL = 'http://localhost:5000/api';
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // Set credentials for axios
-    axios.defaults.withCredentials = true;
 
     useEffect(() => {
         checkUserStatus();
@@ -19,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkUserStatus = async () => {
         try {
-            const { data } = await axios.get(`${API_URL}/auth/me`);
+            const { data } = await authService.getMe();
             if (data.success) {
                 setUser(data.data);
             }
@@ -33,13 +28,13 @@ export const AuthProvider = ({ children }) => {
     const login = async (mobile, password) => {
         try {
             setError(null);
-            const { data } = await axios.post(`${API_URL}/auth/login`, { mobile, password });
+            const { data } = await authService.login(mobile, password);
             if (data.success) {
                 setUser(data.user);
                 return { success: true };
             }
         } catch (err) {
-            const message = err.response?.data?.message || 'Login failed';
+            const message = err.message || 'Login failed';
             setError(message);
             return { success: false, message };
         }
@@ -48,14 +43,13 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData) => {
         try {
             setError(null);
-            // userData will now contain mobile instead of email
-            const { data } = await axios.post(`${API_URL}/auth/register`, userData);
+            const { data } = await authService.register(userData);
             if (data.success) {
                 setUser(data.user);
                 return { success: true };
             }
         } catch (err) {
-            const message = err.response?.data?.message || 'Registration failed';
+            const message = err.message || 'Registration failed';
             setError(message);
             return { success: false, message };
         }
@@ -63,15 +57,25 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.get(`${API_URL}/auth/logout`);
+            await authService.logout();
             setUser(null);
         } catch (err) {
             console.error('Logout failed');
         }
     };
 
+    // Refresh user data (call after deposit/withdraw/invest)
+    const refreshUser = async () => {
+        try {
+            const { data } = await authService.getMe();
+            if (data.success) setUser(data.data);
+        } catch (err) {
+            console.error('Refresh failed');
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, error, login, register, logout, setUser }}>
+        <AuthContext.Provider value={{ user, loading, error, login, register, logout, setUser, refreshUser }}>
             {children}
         </AuthContext.Provider>
     );

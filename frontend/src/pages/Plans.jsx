@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { planService, investmentService } from '../services';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { Zap, Clock, TrendingUp } from 'lucide-react';
@@ -73,7 +73,7 @@ const Plans = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5000/api/plans');
+                const { data } = await planService.getAll();
                 setPlans(data.data);
             } catch (err) { console.error('Error fetching plans'); }
             finally { setLoadingPlans(false); }
@@ -91,10 +91,10 @@ const Plans = () => {
         if (!amount || isNaN(amount) || amount < plan.minAmount || amount > plan.maxAmount) { alert('Invalid amount.'); return; }
         setLoadingPlan(plan._id);
         try {
-            await axios.post('http://localhost:5000/api/investments', { planId: plan._id, amount: Number(amount) });
+            await investmentService.invest(plan._id, Number(amount));
             alert('Investment successful!');
             window.location.reload();
-        } catch (err) { alert(err.response?.data?.message || 'Transaction failed'); }
+        } catch (err) { alert(err.message || 'Transaction failed'); }
         finally { setLoadingPlan(null); }
     };
 

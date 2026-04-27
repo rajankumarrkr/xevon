@@ -71,11 +71,6 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {user?.role === 'admin' && (
-                    <Link to="/admin" className="premium-btn" style={{ width: '100%', marginTop: 16, gap: 8, padding: '14px' }}>
-                        <Terminal size={18} /> Admin Panel
-                    </Link>
-                )}
 
                 <div style={{ position: 'absolute', top: 0, right: 0, width: 120, height: 120, background: 'radial-gradient(circle, rgba(59,130,246,0.08), transparent)', pointerEvents: 'none' }} />
             </motion.div>
@@ -87,7 +82,6 @@ const Profile = () => {
                 </div>
                 <ProfileItem icon={Phone} label="Mobile" value={`+91 ${user?.mobile}`} color="var(--accent)" />
                 <ProfileItem icon={Lock} label="Password" value="••••••••" color="var(--primary-blue)" to="/settings" />
-                <ProfileItem icon={Shield} label="Role" value={user?.role?.toUpperCase()} color="#FACC15" />
             </div>
 
             <div className="glass-card" style={{ borderRadius: 22, overflow: 'hidden' }}>

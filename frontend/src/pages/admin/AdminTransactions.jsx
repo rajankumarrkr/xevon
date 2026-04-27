@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, ExternalLink, Search, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-
-const API_URL = 'http://localhost:5000/api';
 
 const AdminTransactions = () => {
     const [transactions, setTransactions] = useState([]);
@@ -13,14 +11,14 @@ const AdminTransactions = () => {
     useEffect(() => { fetchTransactions(); }, []);
 
     const fetchTransactions = async () => {
-        try { const { data } = await axios.get(`${API_URL}/transactions`); setTransactions(data.data); }
+        try { const { data } = await api.get('/transactions'); setTransactions(data.data); }
         catch (e) { console.error('Error fetching transactions'); }
         finally { setLoading(false); }
     };
 
     const handleStatusUpdate = async (id, status) => {
         if (!window.confirm(`Confirm ${status.toUpperCase()}?`)) return;
-        try { await axios.put(`${API_URL}/transactions/${id}/status`, { status }); fetchTransactions(); }
+        try { await api.put(`/transactions/${id}/status`, { status }); fetchTransactions(); }
         catch (e) { alert(e.response?.data?.message || 'Update failed'); }
     };
 

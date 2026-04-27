@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit3, Trash2, Zap, Shield, Crown, Save, X, Layers, Activity } from 'lucide-react';
-
-const API_URL = 'http://localhost:5000/api';
 
 const AdminPlans = () => {
     const [plans, setPlans] = useState([]);
@@ -14,7 +12,7 @@ const AdminPlans = () => {
     useEffect(() => { fetchPlans(); }, []);
 
     const fetchPlans = async () => {
-        try { const { data } = await axios.get(`${API_URL}/plans`); setPlans(data.data); }
+        try { const { data } = await api.get('/plans'); setPlans(data.data); }
         catch (e) { console.error('Error'); }
         finally { setLoading(false); }
     };
@@ -27,8 +25,8 @@ const AdminPlans = () => {
     const handleSave = async (e) => {
         e.preventDefault();
         try {
-            if (editingPlan && editingPlan !== 'new') await axios.put(`${API_URL}/plans/${editingPlan}`, formData);
-            else await axios.post(`${API_URL}/plans`, formData);
+            if (editingPlan && editingPlan !== 'new') await api.put(`/plans/${editingPlan}`, formData);
+            else await api.post('/plans', formData);
             setEditingPlan(null); setFormData({ name: '', minAmount: '', maxAmount: '', dailyPercent: '', durationDays: '', isActive: true }); fetchPlans();
         } catch (e) { alert('Operation failed'); }
     };

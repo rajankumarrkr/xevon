@@ -16,7 +16,11 @@ export const protect = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id);
+        if (decoded.id === 'admin' && decoded.role === 'admin') {
+            req.user = { id: 'admin', _id: 'admin', role: 'admin', name: 'Super Admin' };
+        } else {
+            req.user = await User.findById(decoded.id);
+        }
         next();
     } catch (error) {
         return res.status(401).json({ success: false, message: 'Not authorized to access this route' });

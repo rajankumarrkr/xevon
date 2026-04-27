@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Shield, ShieldOff, Search, AlertTriangle, Phone, Calendar, Coins, X, Save } from 'lucide-react';
-
-const API_URL = 'http://localhost:5000/api';
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]);
@@ -15,7 +13,7 @@ const AdminUsers = () => {
     useEffect(() => { fetchUsers(); }, []);
 
     const fetchUsers = async () => {
-        try { const { data } = await axios.get(`${API_URL}/admin/users`); setUsers(data.data); }
+        try { const { data } = await api.get('/admin/users'); setUsers(data.data); }
         catch (e) { console.error('Error'); }
         finally { setLoading(false); }
     };
@@ -23,14 +21,14 @@ const AdminUsers = () => {
     const handleToggleStatus = async (id, currentStatus) => {
         const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
         if (!window.confirm(`${newStatus.toUpperCase()} this user?`)) return;
-        try { await axios.put(`${API_URL}/admin/users/${id}/status`, { status: newStatus }); fetchUsers(); }
+        try { await api.put(`/admin/users/${id}/status`, { status: newStatus }); fetchUsers(); }
         catch (e) { alert('Failed'); }
     };
 
     const handleBalanceAdjust = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`${API_URL}/admin/users/${selectedUser._id}/balance`, adjustment);
+            await api.put(`/admin/users/${selectedUser._id}/balance`, adjustment);
             alert('Balance updated!');
             setSelectedUser(null); setAdjustment({ amount: '', description: '' }); fetchUsers();
         } catch (e) { alert('Failed'); }

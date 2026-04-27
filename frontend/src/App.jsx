@@ -22,6 +22,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminTransactions from './pages/admin/AdminTransactions';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminPlans from './pages/admin/AdminPlans';
+import AdminLogin from './pages/admin/AdminLogin';
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function App() {
             <Route path="deposit" element={<Deposit />} />
             <Route path="withdraw" element={<Withdraw />} />
           </Route>
+
+          {/* Admin Login (Public) */}
+          <Route path="/admin/login" element={<AdminLogin />} />
 
           {/* Protected Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>

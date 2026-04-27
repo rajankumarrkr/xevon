@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { motion } from 'framer-motion';
 import { Users, TrendingUp, Wallet, ArrowDownCircle, ArrowUpCircle, RefreshCw, Plus } from 'lucide-react';
-
-const API_URL = 'http://localhost:5000/api';
 
 const AdminStat = ({ label, value, icon: Icon, color }) => (
     <motion.div whileHover={{ y: -4 }} className="glass-card" style={{ padding: 24 }}>
@@ -24,8 +22,8 @@ const AdminDashboard = () => {
 
     const fetchStats = async () => {
         setLoading(true);
-        try { const { data } = await axios.get(`${API_URL}/admin/stats`); setStats(data.data); }
-        catch (e) { console.error('Error fetching stats'); }
+        try { const { data } = await api.get('/admin/stats'); setStats(data.data); }
+        catch (e) { console.error('Error fetching stats'); setStats(null); }
         finally { setLoading(false); }
     };
 
@@ -48,13 +46,19 @@ const AdminDashboard = () => {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: 20 }}>
-                <AdminStat label="TOTAL USERS" value={stats.totalUsers} icon={Users} color="var(--accent)" />
-                <AdminStat label="DEPOSITS" value={`₹${stats.totalDeposits.toLocaleString()}`} icon={ArrowDownCircle} color="var(--success)" />
-                <AdminStat label="WITHDRAWALS" value={`₹${stats.totalWithdrawals.toLocaleString()}`} icon={ArrowUpCircle} color="var(--error)" />
-                <AdminStat label="INVESTMENTS" value={`₹${stats.activeInvestments.toLocaleString()}`} icon={TrendingUp} color="#FACC15" />
-                <AdminStat label="LIQUIDITY" value={`₹${stats.platformLiquidity.toLocaleString()}`} icon={Wallet} color="var(--primary-blue)" />
-            </div>
+            {stats ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: 20 }}>
+                    <AdminStat label="TOTAL USERS" value={stats.totalUsers || 0} icon={Users} color="var(--accent)" />
+                    <AdminStat label="DEPOSITS" value={`₹${(stats.totalDeposits || 0).toLocaleString()}`} icon={ArrowDownCircle} color="var(--success)" />
+                    <AdminStat label="WITHDRAWALS" value={`₹${(stats.totalWithdrawals || 0).toLocaleString()}`} icon={ArrowUpCircle} color="var(--error)" />
+                    <AdminStat label="INVESTMENTS" value={`₹${(stats.activeInvestments || 0).toLocaleString()}`} icon={TrendingUp} color="#FACC15" />
+                    <AdminStat label="LIQUIDITY" value={`₹${(stats.platformLiquidity || 0).toLocaleString()}`} icon={Wallet} color="var(--primary-blue)" />
+                </div>
+            ) : (
+                <div className="glass-card flex items-center justify-center" style={{ padding: 40, color: 'var(--text-muted)' }}>
+                    Failed to load stats.
+                </div>
+            )}
 
             {/* Chart Area */}
             <div className="glass-card" style={{ padding: 28, position: 'relative', overflow: 'hidden' }}>

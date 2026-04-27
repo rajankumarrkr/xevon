@@ -78,11 +78,51 @@ export const login = async (req, res) => {
     }
 };
 
+// @desc    Admin login
+// @route   POST /api/auth/admin-login
+// @access  Public
+export const adminLogin = async (req, res) => {
+    try {
+        const { adminId, password } = req.body;
+
+        if (adminId === 'sukoon' && password === 'sukoon123') {
+            const token = jwt.sign({ id: 'admin', role: 'admin' }, process.env.JWT_SECRET, {
+                expiresIn: '30d'
+            });
+
+            const options = {
+                expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                httpOnly: true
+            };
+
+            if (process.env.NODE_ENV === 'production') {
+                options.secure = true;
+            }
+
+            return res
+                .status(200)
+                .cookie('token', token, options)
+                .json({
+                    success: true,
+                    token,
+                    user: { id: 'admin', name: 'Super Admin', role: 'admin' }
+                });
+        } else {
+            return res.status(401).json({ success: false, message: 'Invalid admin credentials' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 // @desc    Get current logged in user
 // @route   GET /api/auth/me
 // @access  Private
 export const getMe = async (req, res) => {
     try {
+        if (req.user.role === 'admin' && req.user.id === 'admin') {
+            return res.status(200).json({ success: true, data: { _id: 'admin', role: 'admin', name: 'Super Admin' } });
+        }
         const user = await User.findById(req.user.id).populate('referredBy', 'name mobile');
         res.status(200).json({ success: true, data: user });
     } catch (error) {

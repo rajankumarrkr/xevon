@@ -8,9 +8,10 @@ const AdminLayout = () => {
     const { user, loading } = useAuth();
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const isAdminAuth = localStorage.getItem('adminAuth') === 'true';
 
     if (loading) return null;
-    if (!user || user.role !== 'admin') return <Navigate to="/" replace />;
+    if (!isAdminAuth && (!user || user.role !== 'admin')) return <Navigate to="/admin/login" replace />;
 
     const menuItems = [
         { path: '/admin', icon: BarChart3, label: 'Statistics' },
@@ -55,7 +56,7 @@ const AdminLayout = () => {
     return (
         <div className="flex" style={{ minHeight: '100vh', background: 'var(--bg-darkest)' }}>
             {/* Desktop Sidebar */}
-            <aside className="glass-card" style={{
+            <aside style={{
                 width: 260, margin: 20, height: 'calc(100vh - 40px)', position: 'fixed',
                 display: 'none', flexDirection: 'column', zIndex: 100, borderRadius: 24,
                 background: 'rgba(255,255,255,0.8)', overflow: 'hidden'

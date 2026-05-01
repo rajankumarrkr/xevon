@@ -20,6 +20,9 @@ export const protect = async (req, res, next) => {
             req.user = { id: 'admin', _id: 'admin', role: 'admin', name: 'Super Admin' };
         } else {
             req.user = await User.findById(decoded.id);
+            if (!req.user) {
+                return res.status(401).json({ success: false, message: 'User no longer exists' });
+            }
         }
         next();
     } catch (error) {

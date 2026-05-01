@@ -32,56 +32,49 @@ const Layout = () => {
             <div className="mesh-bg" />
 
             {/* Header */}
-            <header className="flex items-center justify-between relative z-10" style={{ padding: '20px 20px 8px' }}>
-                <div className="flex items-center gap-3">
-                    <div style={{
-                        width: 38, height: 38, borderRadius: 13,
-                        background: 'var(--primary-gradient)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 4px 16px rgba(37,99,235,0.25)'
-                    }}>
-                        <span className="outfit" style={{ fontSize: '1rem', fontWeight: 900, color: '#ffffff' }}>X</span>
-                    </div>
-                    <h1 className="outfit" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>XEVON</h1>
-                </div>
+            <header className="flex items-center justify-between relative z-10" style={{ padding: '24px 20px 12px' }}>
                 <div className="flex items-center gap-3">
                     <div style={{
                         width: 42, height: 42, borderRadius: 14,
-                        background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(37,99,235,0.08)',
+                        background: 'var(--primary-gradient)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: 'var(--shadow-sm)'
+                        boxShadow: '0 8px 20px rgba(124, 58, 237, 0.3)'
                     }}>
-                        <Bell size={18} style={{ color: 'var(--text-muted)' }} />
+                        <span className="outfit" style={{ fontSize: '1.2rem', fontWeight: 900, color: '#ffffff' }}>X</span>
+                    </div>
+                    <h1 className="outfit" style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>XEVON</h1>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div style={{
+                        width: 44, height: 44, borderRadius: 15,
+                        background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        position: 'relative'
+                    }}>
+                        <Bell size={20} style={{ color: '#fff' }} />
+                        <div style={{ position: 'absolute', top: 12, right: 12, width: 8, height: 8, background: '#A855F7', borderRadius: '50%', border: '2px solid #0B0F2F' }} />
                     </div>
                     <div style={{
-                        width: 42, height: 42, borderRadius: 14, overflow: 'hidden',
-                        border: '2px solid rgba(37,99,235,0.15)',
-                        boxShadow: '0 2px 8px rgba(37,99,235,0.1)'
+                        width: 44, height: 44, borderRadius: 15, overflow: 'hidden',
+                        background: 'var(--primary-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        border: '1px solid rgba(255,255,255,0.1)', fontWeight: 900, color: '#fff', fontSize: '0.9rem'
                     }}>
-                        <img
-                            src={`https://ui-avatars.com/api/?name=${user?.name || 'U'}&background=DBEAFE&color=2563EB&bold=true&size=80`}
-                            alt="avatar"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
+                        {user?.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'}
                     </div>
                 </div>
             </header>
 
-            {/* Greeting */}
-            <div className="relative z-10" style={{ padding: '12px 20px 4px' }}>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Welcome back,</p>
-                <p className="outfit" style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)' }}>{user?.name || 'Guest'}</p>
-            </div>
+            {/* Greeting is now inside Dashboard for better layout control */}
 
             {/* Main Content */}
-            <main className="relative z-10" style={{ padding: '12px 20px 120px', maxWidth: 560, margin: '0 auto' }}>
+            <main className="relative z-10" style={{ padding: '0 20px 120px', maxWidth: 500, margin: '0 auto' }}>
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={location.pathname}
-                        initial={{ opacity: 0, y: 8 }}
+                        initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.2 }}
+                        exit={{ opacity: 0, y: -12 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
                     >
                         <Outlet />
                     </motion.div>
@@ -103,17 +96,20 @@ const Layout = () => {
                                 className="flex flex-col items-center gap-1"
                             >
                                 <div style={{
-                                    padding: 8, borderRadius: 12,
-                                    background: isActive ? 'rgba(37,99,235,0.08)' : 'transparent',
-                                    transition: 'background 0.25s'
+                                    padding: 10, borderRadius: 16,
+                                    background: isActive ? 'var(--primary-gradient)' : 'transparent',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    position: 'relative',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    boxShadow: isActive ? '0 4px 12px rgba(124, 58, 237, 0.4)' : 'none'
                                 }}>
-                                    <item.icon size={22} strokeWidth={isActive ? 2.5 : 1.8} style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }} />
+                                    <item.icon size={22} strokeWidth={isActive ? 2.5 : 2} style={{ color: isActive ? '#fff' : 'rgba(255,255,255,0.4)' }} />
                                 </div>
-                                <span style={{ fontSize: 10, fontWeight: isActive ? 700 : 500, color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>{item.label}</span>
+                                <span style={{ fontSize: 10, fontWeight: isActive ? 800 : 600, color: isActive ? '#fff' : 'rgba(255,255,255,0.4)', letterSpacing: '0.3px' }}>{item.label}</span>
                                 {isActive && (
                                     <motion.div
-                                        layoutId="nav-indicator"
-                                        style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 10px rgba(37,99,235,0.4)' }}
+                                        layoutId="nav-line"
+                                        style={{ width: 12, height: 2, borderRadius: 10, background: 'var(--accent-light)', marginTop: 2, boxShadow: '0 0 8px var(--accent-light)' }}
                                     />
                                 )}
                             </motion.div>

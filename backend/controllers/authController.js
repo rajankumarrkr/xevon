@@ -92,12 +92,10 @@ export const adminLogin = async (req, res) => {
 
             const options = {
                 expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-                httpOnly: true
+                httpOnly: true,
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                secure: process.env.NODE_ENV === 'production'
             };
-
-            if (process.env.NODE_ENV === 'production') {
-                options.secure = true;
-            }
 
             return res
                 .status(200)
@@ -170,7 +168,9 @@ export const changePassword = async (req, res) => {
 export const logout = async (req, res) => {
     res.cookie('token', 'none', {
         expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production'
     });
 
     res.status(200).json({ success: true, data: {} });
@@ -185,12 +185,10 @@ const sendTokenResponse = (user, statusCode, res) => {
 
     const options = {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        httpOnly: true
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production'
     };
-
-    if (process.env.NODE_ENV === 'production') {
-        options.secure = true;
-    }
 
     res
         .status(statusCode)

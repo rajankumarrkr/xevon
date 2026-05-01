@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
             setError(null);
             const { data } = await authService.login(mobile, password);
             if (data.success) {
+                if (data.token) localStorage.setItem('token', data.token);
                 setUser(data.user);
                 return { success: true };
             }
@@ -45,6 +46,7 @@ export const AuthProvider = ({ children }) => {
             setError(null);
             const { data } = await authService.register(userData);
             if (data.success) {
+                if (data.token) localStorage.setItem('token', data.token);
                 setUser(data.user);
                 return { success: true };
             }
@@ -58,6 +60,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             await authService.logout();
+            localStorage.removeItem('token');
             setUser(null);
         } catch (err) {
             console.error('Logout failed');

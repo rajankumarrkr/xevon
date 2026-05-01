@@ -18,6 +18,7 @@ const AdminLogin = () => {
         try {
             const { data } = await api.post('/auth/admin-login', { adminId, password });
             if (data.success && data.user.role === 'admin') {
+                localStorage.setItem('token', data.token);
                 localStorage.setItem('adminAuth', 'true');
                 navigate('/admin');
             }

@@ -6,103 +6,151 @@ import { Zap, Clock, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const PlanCard = ({ plan, onPurchase, loading }) => {
-    // Determine tier color based on amount
     const getTierConfig = (amount) => {
-        if (amount >= 10000) return { label: 'DIAMOND TIER', color: '#F472B6', bg: 'rgba(244,114,182,0.1)', icon: '💎' };
-        if (amount >= 5000) return { label: 'GOLD TIER', color: '#FBBF24', bg: 'rgba(251,191,36,0.1)', icon: '👑' };
-        if (amount >= 2000) return { label: 'SILVER TIER', color: '#94A3B8', bg: 'rgba(148,163,184,0.1)', icon: '⚡' };
-        return { label: 'BRONZE TIER', color: '#B45309', bg: 'rgba(180,83,9,0.1)', icon: '🚀' };
+        if (amount >= 10000) return { label: 'DIAMOND', color: '#F472B6', secondary: '#DB2777', glow: 'rgba(244,114,182,0.4)', icon: '💎', pattern: 'circle' };
+        if (amount >= 5000) return { label: 'PLATINUM', color: '#FBBF24', secondary: '#D97706', glow: 'rgba(251,191,36,0.3)', icon: '👑', pattern: 'rect' };
+        if (amount >= 2000) return { label: 'GOLD', color: '#A855F7', secondary: '#7C3AED', glow: 'rgba(168, 85, 247, 0.3)', icon: '⚡', pattern: 'triangle' };
+        return { label: 'ELITE', color: '#3B82F6', secondary: '#2563EB', glow: 'rgba(59, 130, 246, 0.3)', icon: '🚀', pattern: 'plus' };
     };
 
     const tier = getTierConfig(plan.minAmount);
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            whileHover={{ y: -5 }}
-            className="glass-card group"
-            style={{ 
-                overflow: 'hidden', 
-                borderLeft: `4px solid ${tier.color}`,
-                background: `linear-gradient(135deg, rgba(255,255,255,0.05) 0%, ${tier.bg} 100%)`
-            }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="relative group"
+            style={{ marginBottom: 20 }}
         >
-            <div style={{ padding: '28px 24px' }}>
-                <div className="flex justify-between items-start" style={{ marginBottom: 20 }}>
-                    <div>
-                        <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
-                            <span style={{ fontSize: 9, color: tier.color, fontWeight: 900, letterSpacing: '1.5px', background: tier.bg, padding: '2px 8px', borderRadius: 6 }}>{tier.label}</span>
-                            <span style={{ fontSize: 9, color: 'var(--success)', fontWeight: 900, letterSpacing: '1.5px', background: 'rgba(34,197,94,0.1)', padding: '2px 8px', borderRadius: 6 }}>HOT</span>
+            {/* Animated Glow Border */}
+            <div style={{
+                position: 'absolute', inset: -1, borderRadius: 25,
+                background: `linear-gradient(45deg, ${tier.color}, ${tier.secondary}, transparent, ${tier.color})`,
+                backgroundSize: '200% 200%', animation: 'shimmer 3s linear infinite',
+                opacity: 0.4, filter: 'blur(8px)', zIndex: 0
+            }} className="group-hover:opacity-100 transition-opacity" />
+
+            <div className="glass-card relative z-10" style={{ 
+                overflow: 'hidden', 
+                background: 'rgba(11, 15, 47, 0.7)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: 24,
+                boxShadow: `0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px ${tier.glow}`
+            }}>
+                {/* Background Pattern SVG */}
+                <div style={{ position: 'absolute', top: 0, right: 0, opacity: 0.05, pointerEvents: 'none' }}>
+                    <svg width="200" height="200" viewBox="0 0 100 100">
+                        <defs>
+                            <pattern id={`pattern-${plan._id}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <circle cx="2" cy="2" r="1" fill={tier.color} />
+                            </pattern>
+                        </defs>
+                        <rect width="100" height="100" fill={`url(#pattern-${plan._id})`} />
+                    </svg>
+                </div>
+
+                <div style={{ padding: '32px 28px' }}>
+                    <div className="flex justify-between items-start" style={{ marginBottom: 24 }}>
+                        <div>
+                            <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
+                                <motion.div 
+                                    animate={{ opacity: [0.5, 1, 0.5] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    style={{ width: 6, height: 6, borderRadius: '50%', background: tier.color, boxShadow: `0 0 10px ${tier.color}` }} 
+                                />
+                                <span style={{ fontSize: 10, color: tier.color, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>{tier.label} PROTOCOL</span>
+                            </div>
+                            <h2 className="outfit" style={{ fontSize: '1.6rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>{plan.name}</h2>
                         </div>
-                        <h2 className="outfit" style={{ fontSize: '1.4rem', fontWeight: 900, color: '#fff' }}>{plan.name}</h2>
+                        <div style={{ 
+                            width: 60, height: 60, borderRadius: 20, 
+                            background: `linear-gradient(135deg, rgba(255,255,255,0.05) 0%, ${tier.glow} 100%)`,
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '1.8rem',
+                            boxShadow: `0 10px 20px rgba(0,0,0,0.3)`
+                        }}>
+                            {tier.icon}
+                        </div>
                     </div>
+
+                    <div className="grid grid-cols-2 gap-6" style={{ marginBottom: 32 }}>
+                        <div className="relative">
+                            <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 6, letterSpacing: 1 }}>Daily Profit</p>
+                            <div className="flex items-baseline gap-1">
+                                <span className="outfit" style={{ fontSize: '2.2rem', fontWeight: 900, background: `linear-gradient(to bottom, #fff, ${tier.color})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{plan.dailyPercent}%</span>
+                            </div>
+                            <div style={{ position: 'absolute', bottom: -8, left: 0, width: '40%', height: 2, background: tier.color, borderRadius: 10, boxShadow: `0 0 10px ${tier.color}` }} />
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
+                            <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 6, letterSpacing: 1 }}>Duration</p>
+                            <div className="flex items-baseline justify-end gap-1">
+                                <span className="outfit" style={{ fontSize: '2.2rem', fontWeight: 900, color: '#fff' }}>{plan.durationDays}</span>
+                                <span style={{ fontSize: 12, fontWeight: 800, color: 'var(--text-muted)' }}>DAYS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Stats Mesh Section */}
                     <div style={{ 
-                        width: 54, height: 54, borderRadius: 18, 
-                        background: 'rgba(255,255,255,0.03)', 
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: '1.5rem',
-                        boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
+                        padding: '20px', borderRadius: 20, 
+                        background: 'rgba(255,255,255,0.02)', 
+                        border: '1px solid rgba(255,255,255,0.04)',
+                        marginBottom: 32,
+                        backdropFilter: 'blur(10px)'
                     }}>
-                        {tier.icon}
+                        <div className="flex flex-col gap-4">
+                            <div className="flex justify-between items-center">
+                                <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Min Stake</span>
+                                <span style={{ fontSize: 14, fontWeight: 900, color: '#fff' }}>₹{plan.minAmount.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Max Capacity</span>
+                                <span style={{ fontSize: 14, fontWeight: 900, color: '#fff' }}>₹{plan.maxAmount.toLocaleString()}</span>
+                            </div>
+                            <div style={{ paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.05)' }} className="flex justify-between items-center">
+                                <span style={{ fontSize: 10, fontWeight: 900, color: tier.color, letterSpacing: 1 }}>TOTAL RETURN</span>
+                                <div className="flex items-center gap-2">
+                                    <TrendingUp size={14} style={{ color: 'var(--success)' }} />
+                                    <span className="outfit" style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--success)' }}>{plan.dailyPercent * plan.durationDays}%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex gap-4" style={{ marginBottom: 24 }}>
-                    <div style={{ flex: 1 }}>
-                        <p style={{ fontSize: 9, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 4 }}>Daily Interest</p>
-                        <div className="flex items-baseline gap-1">
-                            <span className="outfit" style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--success)' }}>{plan.dailyPercent}%</span>
-                            <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--success)', opacity: 0.8 }}>/DAY</span>
-                        </div>
-                    </div>
-                    <div style={{ flex: 1, textAlign: 'right' }}>
-                        <p style={{ fontSize: 9, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 4 }}>Contract Term</p>
-                        <div className="flex items-baseline justify-end gap-1">
-                            <span className="outfit" style={{ fontSize: '1.8rem', fontWeight: 900 }}>{plan.durationDays}</span>
-                            <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-muted)' }}>DAYS</span>
-                        </div>
-                    </div>
+                    <motion.button
+                        whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${tier.glow}` }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => onPurchase(plan)}
+                        disabled={loading}
+                        className="premium-btn"
+                        style={{ 
+                            width: '100%', 
+                            padding: '20px', 
+                            borderRadius: 18, 
+                            fontSize: '0.9rem',
+                            fontWeight: 900,
+                            letterSpacing: '2px',
+                            background: `linear-gradient(135deg, ${tier.color} 0%, ${tier.secondary} 100%)`,
+                            boxShadow: `0 10px 25px rgba(0,0,0,0.3)`,
+                            position: 'relative',
+                            overflow: 'hidden'
+                        }}
+                    >
+                        {/* Shimmer Effect on Button */}
+                        <motion.div 
+                            animate={{ left: ['-100%', '200%'] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                            style={{ position: 'absolute', top: 0, width: '50%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)', skewX: '-20deg' }} 
+                        />
+                        <span style={{ position: 'relative', zIndex: 1 }}>
+                            {loading ? 'INITIALIZING PROTOCOL...' : 'ACTIVATE NODE'}
+                        </span>
+                    </motion.button>
                 </div>
-
-                <div className="flex flex-col gap-3" style={{ marginBottom: 28, padding: '16px', borderRadius: 16, background: 'rgba(0,0,0,0.15)' }}>
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                            <div style={{ width: 4, height: 4, borderRadius: '50%', background: tier.color }} />
-                            <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Minimum Entry</span>
-                        </div>
-                        <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>₹{plan.minAmount.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                            <div style={{ width: 4, height: 4, borderRadius: '50%', background: tier.color }} />
-                            <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Maximum Capacity</span>
-                        </div>
-                        <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>₹{plan.maxAmount.toLocaleString()}</span>
-                    </div>
-                    <div style={{ marginTop: 4, paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.05)' }} className="flex justify-between items-center">
-                        <span style={{ fontSize: 10, fontWeight: 800, color: tier.color }}>TOTAL PROJECTED ROI</span>
-                        <span className="outfit" style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--success)' }}>{plan.dailyPercent * plan.durationDays}%</span>
-                    </div>
-                </div>
-
-                <button
-                    onClick={() => onPurchase(plan)}
-                    disabled={loading}
-                    className="premium-btn"
-                    style={{ 
-                        width: '100%', 
-                        padding: '18px', 
-                        borderRadius: 16, 
-                        fontSize: '0.85rem',
-                        background: tier.color !== '#94A3B8' ? `linear-gradient(135deg, ${tier.color} 0%, var(--accent) 100%)` : 'var(--primary-gradient)',
-                        boxShadow: `0 8px 32px ${tier.bg}`
-                    }}
-                >
-                    {loading ? 'Processing Protocol...' : 'Activate Investment Plan'}
-                </button>
             </div>
         </motion.div>
     );

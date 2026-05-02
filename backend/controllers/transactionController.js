@@ -6,7 +6,7 @@ import User from '../models/User.js';
 // @access  Private
 export const deposit = async (req, res) => {
     try {
-        const { amount } = req.body;
+        const { amount, utr } = req.body;
 
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'Payment screenshot is required' });
@@ -22,9 +22,10 @@ export const deposit = async (req, res) => {
             user: req.user.id,
             type: 'deposit',
             amount,
+            utr,
             proofImage,
             status: 'pending',
-            description: 'Deposit request pending verification'
+            description: `Deposit request pending verification${utr ? ` (UTR: ${utr})` : ''}`
         });
 
         res.status(201).json({ success: true, data: transaction });

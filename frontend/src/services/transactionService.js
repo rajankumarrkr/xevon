@@ -2,10 +2,11 @@ import api from './api';
 
 const transactionService = {
     // Submit deposit with screenshot proof
-    deposit: (amount, proofFile) => {
+    deposit: (amount, proofFile, utr) => {
         const formData = new FormData();
         formData.append('amount', amount);
         formData.append('proof', proofFile);
+        if (utr) formData.append('utr', utr);
         return api.post('/transactions/deposit', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });

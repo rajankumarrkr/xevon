@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, NavLink, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Layers, Share2, User, Bell } from 'lucide-react';
+import { LayoutDashboard, Layers, Share2, User, Bell, PlusCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Layout = () => {
@@ -23,6 +23,7 @@ const Layout = () => {
     const navItems = [
         { path: '/', icon: LayoutDashboard, label: 'Home' },
         { path: '/plans', icon: Layers, label: 'Invest' },
+        { path: '/deposit', icon: PlusCircle, label: 'Deposit' },
         { path: '/refer', icon: Share2, label: 'Refer' },
         { path: '/profile', icon: User, label: 'Profile' },
     ];

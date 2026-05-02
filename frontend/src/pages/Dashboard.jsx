@@ -71,17 +71,26 @@ const Dashboard = () => {
                     </div>
 
                     {/* CTA Buttons */}
-                    <div className="flex gap-4">
-                        <Link to="/plans" className="premium-btn" style={{ flex: 1.2, padding: '16px 0', fontSize: '0.8rem', borderRadius: 16 }}>
+                    <div className="flex gap-3">
+                        <Link to="/plans" className="premium-btn" style={{ flex: 1.2, padding: '16px 0', fontSize: '0.75rem', borderRadius: 16 }}>
                             <Plus size={18} /> Invest Now
                         </Link>
-                        <Link to="/withdraw" className="btn-outlined" style={{ 
-                            flex: 1, padding: '16px 0', fontSize: '0.8rem', borderRadius: 16, 
-                            border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)',
-                            color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontWeight: 800 
-                        }}>
-                            <ArrowDownRight size={18} /> Withdraw
-                        </Link>
+                        <div className="flex flex-col gap-2 flex-1">
+                            <Link to="/deposit" className="btn-outlined" style={{ 
+                                padding: '12px 0', fontSize: '0.75rem', borderRadius: 14, 
+                                border: '1px solid var(--accent)', background: 'rgba(124, 58, 237, 0.08)',
+                                color: 'var(--accent-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontWeight: 800 
+                            }}>
+                                <ArrowUpRight size={16} /> Deposit
+                            </Link>
+                            <Link to="/withdraw" className="btn-outlined" style={{ 
+                                padding: '12px 0', fontSize: '0.75rem', borderRadius: 14, 
+                                border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)',
+                                color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontWeight: 800 
+                            }}>
+                                <ArrowDownRight size={16} /> Withdraw
+                            </Link>
+                        </div>
                     </div>
                 </div>
 

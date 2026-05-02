@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Zap, Users, User } from 'lucide-react';
+import { Home, Zap, Users, User, PlusCircle } from 'lucide-react';
 
 const BottomNav = () => {
     return (
@@ -12,6 +12,10 @@ const BottomNav = () => {
             <NavLink to="/plans" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                 <Zap size={24} />
                 <span>Plans</span>
+            </NavLink>
+            <NavLink to="/deposit" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <PlusCircle size={24} />
+                <span>Deposit</span>
             </NavLink>
             <NavLink to="/refer" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                 <Users size={24} />

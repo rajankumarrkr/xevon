@@ -25,6 +25,9 @@ const transactionSchema = new mongoose.Schema({
     },
     proofImage: {
         type: String // URL or path for deposit screenshot
+    },
+    utr: {
+        type: String // 12-digit UTR/Transaction ID for UPI
     }
 }, {
     timestamps: true

@@ -145,11 +145,12 @@ input,textarea,select { font-family:inherit; }
 .premium-input {
   width:100%; padding:14px 18px;
   background:rgba(255,255,255,0.85); border:1.5px solid rgba(37,99,235,0.1);
-  border-radius:var(--radius-sm); color:var(--text-primary); font-size:0.95rem;
+  border-radius:var(--radius-sm); color:#0B0F2F; font-size:0.95rem;
   outline:none; transition:all 0.3s ease;
 }
 .premium-input:focus {
   border-color:var(--accent); background:rgba(255,255,255,1);
+  color:#0B0F2F;
   box-shadow:0 0 0 4px rgba(37,99,235,0.1);
 }
 .premium-input::placeholder { color:var(--text-muted); }

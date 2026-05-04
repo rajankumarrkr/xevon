@@ -1,5 +1,5 @@
 import express from 'express';
-import { getDashboardStats, getAllUsers, updateUserStatus, adjustBalance } from '../controllers/adminController.js';
+import { getDashboardStats, getAllUsers, updateUserStatus, adjustBalance, distributeDailyProfit } from '../controllers/adminController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -12,5 +12,6 @@ router.get('/stats', getDashboardStats);
 router.get('/users', getAllUsers);
 router.put('/users/:id/status', updateUserStatus);
 router.put('/users/:id/balance', adjustBalance);
+router.post('/distribute-profits', distributeDailyProfit);
 
 export default router;

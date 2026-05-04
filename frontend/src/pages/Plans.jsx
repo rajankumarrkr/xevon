@@ -14,6 +14,12 @@ const PlanCard = ({ plan, onPurchase, loading }) => {
     };
 
     const tier = getTierConfig(plan.minAmount);
+    
+    // Transformation Layer: Mapping Admin Data to User Display Format
+    const dailyEarning = plan.dailyEarning || (plan.minAmount * plan.dailyPercent / 100);
+    const totalReturn = dailyEarning * plan.durationDays;
+    const totalProfit = totalReturn - plan.minAmount;
+    const tierNumber = plan.minAmount >= 10000 ? '4' : plan.minAmount >= 5000 ? '3' : plan.minAmount >= 2000 ? '2' : '1';
 
     return (
         <motion.div
@@ -54,70 +60,64 @@ const PlanCard = ({ plan, onPurchase, loading }) => {
 
                 <div style={{ padding: '32px 28px' }}>
                     <div className="flex justify-between items-start" style={{ marginBottom: 24 }}>
-                        <div>
-                            <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
-                                <motion.div 
-                                    animate={{ opacity: [0.5, 1, 0.5] }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                    style={{ width: 6, height: 6, borderRadius: '50%', background: tier.color, boxShadow: `0 0 10px ${tier.color}` }} 
-                                />
-                                <span style={{ fontSize: 10, color: tier.color, fontWeight: 900, letterSpacing: '2px', textTransform: 'uppercase' }}>{tier.label} PROTOCOL</span>
+                        <div className="flex items-center gap-4">
+                            <div style={{ 
+                                width: 50, height: 50, borderRadius: 16, 
+                                background: `linear-gradient(135deg, rgba(255,255,255,0.05) 0%, ${tier.glow} 100%)`,
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                fontSize: '1.4rem',
+                                boxShadow: `0 10px 20px rgba(0,0,0,0.3)`
+                            }}>
+                                {tier.icon}
                             </div>
-                            <h2 className="outfit" style={{ fontSize: '1.6rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>{plan.name}</h2>
+                            <div>
+                                <h2 className="outfit" style={{ fontSize: '1.3rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.5px', marginBottom: 2 }}>{plan.name}</h2>
+                                <p style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase' }}>TIER {tierNumber} - {tier.label}</p>
+                            </div>
                         </div>
                         <div style={{ 
-                            width: 60, height: 60, borderRadius: 20, 
-                            background: `linear-gradient(135deg, rgba(255,255,255,0.05) 0%, ${tier.glow} 100%)`,
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: '1.8rem',
-                            boxShadow: `0 10px 20px rgba(0,0,0,0.3)`
+                            padding: '8px 12px', borderRadius: 12, 
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(255,255,255,0.06)',
+                            textAlign: 'center'
                         }}>
-                            {tier.icon}
+                            <p style={{ fontSize: 8, color: 'var(--text-muted)', fontWeight: 800, letterSpacing: 0.5, marginBottom: 2 }}>DAILY ROI</p>
+                            <p className="outfit" style={{ fontSize: '1.1rem', fontWeight: 900, color: tier.color }}>{plan.dailyPercent}%</p>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-6" style={{ marginBottom: 32 }}>
-                        <div className="relative">
-                            <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 6, letterSpacing: 1 }}>Daily Profit</p>
-                            <div className="flex items-baseline gap-1">
-                                <span className="outfit" style={{ fontSize: '2.2rem', fontWeight: 900, background: `linear-gradient(to bottom, #fff, ${tier.color})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{plan.dailyPercent}%</span>
-                            </div>
-                            <div style={{ position: 'absolute', bottom: -8, left: 0, width: '40%', height: 2, background: tier.color, borderRadius: 10, boxShadow: `0 0 10px ${tier.color}` }} />
-                        </div>
-                        <div style={{ textAlign: 'right' }}>
-                            <p style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 6, letterSpacing: 1 }}>Duration</p>
-                            <div className="flex items-baseline justify-end gap-1">
-                                <span className="outfit" style={{ fontSize: '2.2rem', fontWeight: 900, color: '#fff' }}>{plan.durationDays}</span>
-                                <span style={{ fontSize: 12, fontWeight: 800, color: 'var(--text-muted)' }}>DAYS</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Stats Mesh Section */}
                     <div style={{ 
-                        padding: '20px', borderRadius: 20, 
-                        background: 'rgba(255,255,255,0.02)', 
-                        border: '1px solid rgba(255,255,255,0.04)',
-                        marginBottom: 32,
+                        padding: '18px 20px', borderRadius: 20, 
+                        background: 'rgba(255,255,255,0.03)', 
+                        border: '1px solid rgba(255,255,255,0.05)',
+                        marginBottom: 20,
                         backdropFilter: 'blur(10px)'
                     }}>
-                        <div className="flex flex-col gap-4">
-                            <div className="flex justify-between items-center">
-                                <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Min Stake</span>
-                                <span style={{ fontSize: 14, fontWeight: 900, color: '#fff' }}>₹{plan.minAmount.toLocaleString()}</span>
+                        <div className="grid grid-cols-3 gap-4">
+                            <div>
+                                <p style={{ fontSize: 9, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 4 }}>INVEST</p>
+                                <p className="outfit" style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff' }}>₹{plan.minAmount.toLocaleString()}</p>
                             </div>
-                            <div className="flex justify-between items-center">
-                                <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Max Capacity</span>
-                                <span style={{ fontSize: 14, fontWeight: 900, color: '#fff' }}>₹{plan.maxAmount.toLocaleString()}</span>
+                            <div style={{ borderLeft: '1px solid rgba(255,255,255,0.05)', paddingLeft: 16 }}>
+                                <p style={{ fontSize: 9, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 4 }}>DAILY</p>
+                                <p className="outfit" style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff' }}>₹{Math.floor(dailyEarning).toLocaleString()}</p>
                             </div>
-                            <div style={{ paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.05)' }} className="flex justify-between items-center">
-                                <span style={{ fontSize: 10, fontWeight: 900, color: tier.color, letterSpacing: 1 }}>TOTAL RETURN</span>
-                                <div className="flex items-center gap-2">
-                                    <TrendingUp size={14} style={{ color: 'var(--success)' }} />
-                                    <span className="outfit" style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--success)' }}>{plan.dailyPercent * plan.durationDays}%</span>
-                                </div>
+                            <div style={{ borderLeft: '1px solid rgba(255,255,255,0.05)', paddingLeft: 16 }}>
+                                <p style={{ fontSize: 9, color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: 4 }}>TOTAL</p>
+                                <p className="outfit" style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--success)' }}>₹{Math.floor(totalReturn).toLocaleString()}</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-between items-center" style={{ marginBottom: 24, padding: '0 4px' }}>
+                        <div className="flex items-center gap-2">
+                            <Clock size={12} style={{ color: 'var(--text-muted)' }} />
+                            <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{plan.durationDays} DAYS</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <TrendingUp size={12} style={{ color: 'var(--success)' }} />
+                            <span style={{ fontSize: 10, fontWeight: 800, color: 'rgba(255,255,255,0.8)', textTransform: 'uppercase' }}>₹{Math.floor(totalProfit).toLocaleString()} PROFIT</span>
                         </div>
                     </div>
 
@@ -147,7 +147,7 @@ const PlanCard = ({ plan, onPurchase, loading }) => {
                             style={{ position: 'absolute', top: 0, width: '50%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)', skewX: '-20deg' }} 
                         />
                         <span style={{ position: 'relative', zIndex: 1 }}>
-                            {loading ? 'INITIALIZING PROTOCOL...' : 'ACTIVATE NODE'}
+                            {loading ? 'ACTIVATING...' : 'ACTIVATE PLAN'}
                         </span>
                     </motion.button>
                 </div>

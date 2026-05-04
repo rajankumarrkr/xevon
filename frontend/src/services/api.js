@@ -35,8 +35,12 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             // Don't redirect if already on login/register
             const path = window.location.pathname;
-            if (path !== '/login' && path !== '/register') {
-                window.location.href = '/login';
+            if (path !== '/login' && path !== '/register' && path !== '/admin/login') {
+                if (path.startsWith('/admin')) {
+                    window.location.href = '/admin/login';
+                } else {
+                    window.location.href = '/login';
+                }
             }
         }
 

@@ -97,3 +97,61 @@ export const adjustBalance = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// @desc    Distribute daily profits to all active investments
+// @route   POST /api/admin/distribute-profits
+// @access  Private/Admin
+export const distributeDailyProfit = async (req, res) => {
+    try {
+        const activeInvestments = await Investment.find({ status: 'active' }).populate('user');
+        
+        if (activeInvestments.length === 0) {
+            return res.status(404).json({ success: false, message: 'No active investments found' });
+        }
+
+        let totalDistributed = 0;
+        let usersAffected = 0;
+
+        for (const investment of activeInvestments) {
+            const user = investment.user;
+            if (!user) continue;
+
+            const profit = investment.dailyProfit;
+            
+            // 1. Update User Balance
+            user.walletBalance += profit;
+            user.totalEarnings = (user.totalEarnings || 0) + profit;
+            await user.save();
+
+            // 2. Create Transaction Log
+            await Transaction.create({
+                user: user._id,
+                type: 'earning',
+                amount: profit,
+                status: 'approved',
+                description: `Daily profit from ${investment.amount} investment`
+            });
+
+            // 3. Update Investment lastEarningDate
+            investment.lastEarningDate = Date.now();
+            
+            // 4. Check if investment should be completed
+            if (new Date() >= new Date(investment.endDate)) {
+                investment.status = 'completed';
+            }
+            
+            await investment.save();
+
+            totalDistributed += profit;
+            usersAffected++;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Successfully distributed ₹${totalDistributed} to ${usersAffected} active investments.`,
+            data: { totalDistributed, usersAffected }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

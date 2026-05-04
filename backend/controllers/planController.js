@@ -44,3 +44,21 @@ export const updatePlan = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// @desc    Delete a plan
+// @route   DELETE /api/plans/:id
+// @access  Private/Admin
+export const deletePlan = async (req, res) => {
+    try {
+        const plan = await Plan.findById(req.params.id);
+        if (!plan) {
+            return res.status(404).json({ success: false, message: 'Plan not found' });
+        }
+
+        await plan.deleteOne();
+
+        res.status(200).json({ success: true, data: {} });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

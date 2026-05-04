@@ -17,6 +17,7 @@ const AdminStat = ({ label, value, icon: Icon, color }) => (
 const AdminDashboard = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [distributing, setDistributing] = useState(false);
 
     useEffect(() => { fetchStats(); }, []);
 
@@ -25,6 +26,21 @@ const AdminDashboard = () => {
         try { const { data } = await api.get('/admin/stats'); setStats(data.data); }
         catch (e) { console.error('Error fetching stats'); setStats(null); }
         finally { setLoading(false); }
+    };
+
+    const handleDistributeProfits = async () => {
+        if (!window.confirm('Are you sure you want to distribute daily profits to ALL active users? This will update their wallet balances immediately.')) return;
+        
+        setDistributing(true);
+        try {
+            const { data } = await api.post('/admin/distribute-profits');
+            alert(data.message || 'Profits distributed successfully!');
+            fetchStats();
+        } catch (e) {
+            alert(e.response?.data?.message || 'Failed to distribute profits');
+        } finally {
+            setDistributing(false);
+        }
     };
 
     if (loading) return (
@@ -41,9 +57,26 @@ const AdminDashboard = () => {
                     <h1 className="outfit" style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-1px' }}>Analytics</h1>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 500 }}>Platform overview</p>
                 </div>
-                <button onClick={fetchStats} className="glass-card flex items-center gap-2" style={{ padding: '10px 18px', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '1px', color: 'var(--text-primary)' }}>
-                    <RefreshCw size={16} /> Refresh
-                </button>
+                <div className="flex gap-3">
+                    <button 
+                        onClick={handleDistributeProfits} 
+                        disabled={distributing}
+                        className="flex items-center gap-2" 
+                        style={{ 
+                            padding: '12px 20px', borderRadius: 14, 
+                            background: 'var(--primary-gradient)', 
+                            color: '#fff', fontWeight: 800, fontSize: '0.75rem', 
+                            letterSpacing: '1px', boxShadow: '0 8px 20px rgba(37,99,235,0.2)',
+                            opacity: distributing ? 0.7 : 1
+                        }}
+                    >
+                        {distributing ? <RefreshCw className="animate-spin" size={16} /> : <TrendingUp size={16} />}
+                        {distributing ? 'DISTRIBUTING...' : 'DISTRIBUTE PROFIT'}
+                    </button>
+                    <button onClick={fetchStats} className="glass-card flex items-center gap-2" style={{ padding: '10px 18px', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '1px', color: 'var(--text-primary)' }}>
+                        <RefreshCw size={16} /> Refresh
+                    </button>
+                </div>
             </div>
 
             {stats ? (

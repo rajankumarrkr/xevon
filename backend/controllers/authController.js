@@ -122,6 +122,13 @@ export const getMe = async (req, res) => {
             return res.status(200).json({ success: true, data: { _id: 'admin', role: 'admin', name: 'Super Admin' } });
         }
         const user = await User.findById(req.user.id).populate('referredBy', 'name mobile');
+        
+        // Ensure user has a referral code
+        if (user && !user.referralCode) {
+            user.referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+            await user.save();
+        }
+
         res.status(200).json({ success: true, data: user });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -200,7 +207,8 @@ const sendTokenResponse = (user, statusCode, res) => {
                 id: user._id,
                 name: user.name,
                 mobile: user.mobile,
-                role: user.role
+                role: user.role,
+                referralCode: user.referralCode
             }
         });
 };

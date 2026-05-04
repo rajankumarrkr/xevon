@@ -71,8 +71,8 @@ const Refer = () => {
                     </p>
 
                     <p style={{ fontSize: 10, color: 'var(--accent)', fontWeight: 800, letterSpacing: '1.5px', marginBottom: 10 }}>YOUR REFERRAL CODE</p>
-                    <div className="flex justify-between items-center" style={{ padding: '14px 18px', borderRadius: 16, background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(37,99,235,0.1)' }}>
-                        <span className="outfit" style={{ fontWeight: 900, fontSize: '1.2rem', letterSpacing: 2, color: 'var(--text-primary)' }}>{user?.referralCode}</span>
+                    <div className="flex justify-between items-center" style={{ padding: '14px 18px', borderRadius: 16, background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                        <span className="outfit" style={{ fontWeight: 900, fontSize: '1.2rem', letterSpacing: 2, color: '#fff' }}>{user?.referralCode || '------'}</span>
                         <button onClick={handleCopy} style={{ padding: 10, borderRadius: 12, background: copied ? 'var(--success)' : 'var(--accent)', color: '#ffffff', border: 'none', transition: 'all 0.25s' }}>
                             {copied ? <CheckCircle2 size={18} /> : <Copy size={18} />}
                         </button>

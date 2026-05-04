@@ -51,27 +51,27 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Encrypt password using bcrypt
-userSchema.pre('save', async function() {
+// Generate referral code and hash password before saving
+userSchema.pre('save', async function(next) {
+    // Generate referral code if not exists
+    if (!this.referralCode) {
+        this.referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    }
+
+    // Hash password only if modified
     if (!this.isModified('password')) {
-        return;
+        return next();
     }
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 // Match user entered password to hashed password in database
 userSchema.methods.matchPassword = async function(enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
-
-// Generate referral code if not exists
-userSchema.pre('save', function() {
-    if (!this.referralCode) {
-        this.referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-    }
-});
 
 const User = mongoose.model('User', userSchema);
 

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { User, Phone, Shield, LogOut, ChevronRight, Settings, Bell, Lock, ExternalLink, Terminal, History as HistoryIcon } from 'lucide-react';
+import { User, Phone, Shield, LogOut, ChevronRight, Settings, Bell, Lock, ExternalLink, Terminal, History as HistoryIcon, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import investmentService from '../services/investmentService';
 
 const ProfileItem = ({ icon: Icon, label, value, to, color }) => {
     const content = (
@@ -24,6 +25,24 @@ const ProfileItem = ({ icon: Icon, label, value, to, color }) => {
 
 const Profile = () => {
     const { user, logout } = useAuth();
+    const [investments, setInvestments] = useState([]);
+    const [loadingInvestments, setLoadingInvestments] = useState(true);
+
+    useEffect(() => {
+        const fetchInvestments = async () => {
+            try {
+                const res = await investmentService.getMine();
+                if (res.data.success) {
+                    setInvestments(res.data.data.filter(inv => inv.status === 'active'));
+                }
+            } catch (error) {
+                console.error('Error fetching investments:', error);
+            } finally {
+                setLoadingInvestments(false);
+            }
+        };
+        fetchInvestments();
+    }, []);
 
     return (
         <div className="flex flex-col" style={{ gap: 28, paddingBottom: 120 }}>
@@ -81,6 +100,31 @@ const Profile = () => {
                 </div>
                 <ProfileItem icon={Phone} label="Mobile" value={`+91 ${user?.mobile}`} color="var(--accent)" />
                 <ProfileItem icon={Lock} label="Password" value="••••••••" color="var(--accent-dark)" to="/settings" />
+            </div>
+
+            {/* My Investment Section */}
+            <div className="glass-card" style={{ borderRadius: 22, overflow: 'hidden' }}>
+                <div style={{ padding: '16px 20px', background: 'rgba(37,99,235,0.03)', borderBottom: '1px solid rgba(37,99,235,0.06)' }}>
+                    <h3 style={{ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '1px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>My Investment</h3>
+                </div>
+                {loadingInvestments ? (
+                    <div className="flex items-center justify-center p-8">
+                        <div style={{ width: 20, height: 20, border: '2px solid var(--accent)', borderTopColor: 'transparent', borderRadius: '50%' }} className="animate-spin" />
+                    </div>
+                ) : investments.length > 0 ? (
+                    investments.map((inv, idx) => (
+                        <ProfileItem 
+                            key={idx}
+                            icon={Zap} 
+                            label={inv.plan?.name || 'Investment Plan'} 
+                            value={`₹${inv.amount?.toLocaleString()} • Daily ₹${inv.dailyProfit?.toLocaleString()}`} 
+                            color="var(--accent)"
+                            to="/plans"
+                        />
+                    ))
+                ) : (
+                    <ProfileItem icon={Zap} label="Active Plan" value="No Active Plan Found" color="var(--text-muted)" to="/plans" />
+                )}
             </div>
 
             <div className="glass-card" style={{ borderRadius: 22, overflow: 'hidden' }}>

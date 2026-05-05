@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { Zap, Clock, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '../components/Toast';
 
 const PlanCard = ({ plan, onPurchase, loading }) => {
     const getTierConfig = (amount) => {
@@ -162,6 +163,7 @@ const Plans = () => {
     const [loadingPlan, setLoadingPlan] = useState(null);
     const { user } = useAuth();
     const navigate = useNavigate();
+    const toast = useToast();
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -181,26 +183,22 @@ const Plans = () => {
         const maxAmt = Number(plan.maxAmount) || minAmt;
 
         if (user.walletBalance < minAmt) {
-            alert(`Insufficient balance. You need at least ₹${minAmt.toLocaleString()}.`);
-            navigate('/deposit');
+            toast.warning('Insufficient Balance', `You need at least ₹${minAmt.toLocaleString()} to activate this plan. Current balance: ₹${user.walletBalance.toLocaleString()}`);
+            setTimeout(() => navigate('/deposit'), 2000);
             return;
         }
 
         // Use minAmount directly (no prompt needed for fixed-amount plans)
         const amount = minAmt;
 
-        if (user.walletBalance < amount) {
-            alert(`Insufficient balance. Your balance: ₹${user.walletBalance.toLocaleString()}`);
-            return;
-        }
-
         setLoadingPlan(plan._id);
         try {
             await investmentService.invest(plan._id, amount);
-            alert('Investment successful!');
-            window.location.reload();
+            toast.success('Plan Activated!', `₹${amount.toLocaleString()} invested in ${plan.name}. Daily earnings start now!`);
+            setTimeout(() => window.location.reload(), 2500);
         } catch (err) { 
-            alert(err.response?.data?.message || err.message || 'Transaction failed'); 
+            const msg = err.response?.data?.message || err.message || 'Transaction failed';
+            toast.error('Activation Failed', msg);
         }
         finally { setLoadingPlan(null); }
     };
@@ -215,6 +213,7 @@ const Plans = () => {
 
     return (
         <div className="flex flex-col gap-6">
+            <toast.ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
             <div>
                 <p style={{ fontSize: 10, color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 4 }}>High-Yield Markets</p>
                 <h1 className="outfit" style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.5px' }}>Investment Plans</h1>

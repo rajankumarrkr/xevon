@@ -25,11 +25,20 @@ const allowedOrigins = [
     'https://xevon-zeta.vercel.app'
 ];
 
+
+// 🔥 ADD THIS ABOVE app.use(cors(...))
+
+app.get('/cron-job', (req, res) => {
+    console.log('Cron job triggered');
+
+    res.status(200).json({ ok: true });
+});
+
 app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
-        
+
         const sanitizedOrigin = origin.replace(/\/$/, "");
         const sanitizedAllowed = allowedOrigins
             .filter(o => o) // Remove null/undefined

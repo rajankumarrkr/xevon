@@ -45,6 +45,7 @@ const AdminPlans = () => {
             const dataToSave = { 
                 ...formData, 
                 minAmount: invest,
+                maxAmount: invest,
                 dailyEarning: daily,
                 dailyPercent: Number(calculatedPercent.toFixed(2)) 
             };

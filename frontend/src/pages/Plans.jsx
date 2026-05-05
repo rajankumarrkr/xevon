@@ -176,18 +176,32 @@ const Plans = () => {
 
     const handlePurchase = async (plan) => {
         if (!user) return;
-        if (user.walletBalance < plan.minAmount) {
+        
+        const minAmt = Number(plan.minAmount);
+        const maxAmt = Number(plan.maxAmount) || minAmt;
+
+        if (user.walletBalance < minAmt) {
+            alert(`Insufficient balance. You need at least ₹${minAmt.toLocaleString()}.`);
             navigate('/deposit');
             return;
         }
-        const amount = prompt(`Enter investment amount (₹${plan.minAmount} - ₹${plan.maxAmount}):`, plan.minAmount);
-        if (!amount || isNaN(amount) || amount < plan.minAmount || amount > plan.maxAmount) { alert('Invalid amount.'); return; }
+
+        // Use minAmount directly (no prompt needed for fixed-amount plans)
+        const amount = minAmt;
+
+        if (user.walletBalance < amount) {
+            alert(`Insufficient balance. Your balance: ₹${user.walletBalance.toLocaleString()}`);
+            return;
+        }
+
         setLoadingPlan(plan._id);
         try {
-            await investmentService.invest(plan._id, Number(amount));
+            await investmentService.invest(plan._id, amount);
             alert('Investment successful!');
             window.location.reload();
-        } catch (err) { alert(err.message || 'Transaction failed'); }
+        } catch (err) { 
+            alert(err.response?.data?.message || err.message || 'Transaction failed'); 
+        }
         finally { setLoadingPlan(null); }
     };
 

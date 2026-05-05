@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Generate referral code and hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
     // Generate referral code if not exists
     if (!this.referralCode) {
         this.referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -60,12 +60,11 @@ userSchema.pre('save', async function(next) {
 
     // Hash password only if modified
     if (!this.isModified('password')) {
-        return next();
+        return;
     }
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
 });
 
 // Match user entered password to hashed password in database

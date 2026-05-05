@@ -15,14 +15,25 @@ export const invest = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Plan not found' });
         }
 
-        if (amount < plan.minAmount || amount > plan.maxAmount) {
+        const minAmount = Number(plan.minAmount);
+        const maxAmount = plan.maxAmount ? Number(plan.maxAmount) : minAmount;
+
+        if (amount < minAmount || amount > maxAmount) {
             return res.status(400).json({ 
                 success: false, 
-                message: `Amount must be between ${plan.minAmount} and ${plan.maxAmount}` 
+                message: `Amount must be between ${minAmount} and ${maxAmount}` 
             });
         }
 
+        // Prevent Super Admin from investing (not a real DB user)
+        if (req.user.id === 'admin') {
+            return res.status(403).json({ success: false, message: 'Admin cannot invest. Use a regular user account.' });
+        }
+
         const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
         if (user.walletBalance < amount) {
             return res.status(400).json({ success: false, message: 'Insufficient balance' });
         }

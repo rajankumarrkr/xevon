@@ -47,7 +47,8 @@ const AdminPlans = () => {
                 minAmount: invest,
                 maxAmount: invest,
                 dailyEarning: daily,
-                dailyPercent: Number(calculatedPercent.toFixed(2)) 
+                dailyPercent: Number(calculatedPercent.toFixed(2)),
+                durationDays: Number(formData.durationDays) || 120
             };
 
             if (editingPlan && editingPlan !== 'new') {
@@ -206,6 +207,22 @@ const AdminPlans = () => {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div>
+                                    <label style={{ fontSize: 13, fontWeight: 700, color: '#64748B', display: 'block', marginBottom: 10 }}>Duration (Days)</label>
+                                    <input 
+                                        type="number"
+                                        className="w-full" 
+                                        style={{ 
+                                            padding: '16px 20px', background: '#fff', border: '1px solid #E2E8F0', borderRadius: 16, 
+                                            fontSize: '0.95rem', fontWeight: 600, color: '#1E293B', outline: 'none'
+                                        }} 
+                                        placeholder="120" 
+                                        value={formData.durationDays} 
+                                        onChange={(e) => setFormData({...formData, durationDays: e.target.value})} 
+                                        required 
+                                    />
                                 </div>
 
                                 <div style={{ marginTop: 8 }}>

@@ -184,7 +184,6 @@ const Plans = () => {
 
         if (user.walletBalance < minAmt) {
             toast.warning('Insufficient Balance', `You need at least ₹${minAmt.toLocaleString()} to activate this plan. Current balance: ₹${user.walletBalance.toLocaleString()}`);
-            setTimeout(() => navigate('/deposit'), 2000);
             return;
         }
 

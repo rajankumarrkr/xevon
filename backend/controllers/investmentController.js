@@ -56,14 +56,7 @@ export const invest = async (req, res) => {
             endDate
         });
 
-        // Record Transaction
-        await Transaction.create({
-            user: user._id,
-            type: 'withdraw',
-            amount,
-            status: 'completed',
-            description: `Invested in ${plan.name} plan`
-        });
+
 
         // Referral Commission (One-time 10% on investment amount)
         if (user.referredBy) {

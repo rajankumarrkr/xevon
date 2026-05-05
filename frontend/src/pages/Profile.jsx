@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import investmentService from '../services/investmentService';
 
 const ProfileItem = ({ icon: Icon, label, value, to, color }) => {
+    const isExternal = to && to.startsWith('http');
     const content = (
         <div className="flex items-center justify-between" style={{ padding: '16px 18px', borderBottom: '1px solid rgba(37,99,235,0.05)', cursor: to ? 'pointer' : 'default', transition: 'background 0.2s' }}>
             <div className="flex items-center gap-4">
@@ -20,6 +21,9 @@ const ProfileItem = ({ icon: Icon, label, value, to, color }) => {
             {to && <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />}
         </div>
     );
+    if (isExternal) {
+        return <a href={to} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>{content}</a>;
+    }
     return to ? <Link to={to} style={{ textDecoration: 'none', color: 'inherit' }}>{content}</Link> : content;
 };
 
@@ -133,7 +137,7 @@ const Profile = () => {
                 </div>
                 <ProfileItem icon={HistoryIcon} label="Transactions" value="View Records" to="/history" color="var(--accent)" />
                 <ProfileItem icon={Bell} label="Notifications" value="Active" color="var(--accent-dark)" />
-                <ProfileItem icon={ExternalLink} label="Support" value="Telegram" color="var(--success)" to="/support" />
+                <ProfileItem icon={ExternalLink} label="Support" value="Telegram" color="var(--success)" to="http://t.me/OnlineSupportusersindia" />
                 <ProfileItem icon={Settings} label="Version" value="v2.4.0" />
             </div>
 

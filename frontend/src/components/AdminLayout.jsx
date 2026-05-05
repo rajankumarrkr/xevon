@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Users, CreditCard, Layers, ArrowLeft, BarChart3, Terminal, Menu, X, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, Layers, ArrowLeft, BarChart3, Terminal, Menu, X, Settings, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminLayout = () => {
-    const { user, loading } = useAuth();
+    const { user, loading, logout } = useAuth();
     const location = useLocation();
+    const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const isAdminAuth = localStorage.getItem('adminAuth') === 'true';
 
@@ -20,6 +21,14 @@ const AdminLayout = () => {
         { path: '/admin/plans', icon: Layers, label: 'Plans' },
         { path: '/admin/settings', icon: Settings, label: 'App Settings' },
     ];
+    
+    const handleLogout = async () => {
+        if (window.confirm('Are you sure you want to logout from Admin Panel?')) {
+            localStorage.removeItem('adminAuth');
+            await logout();
+            navigate('/admin/login');
+        }
+    };
 
     const Sidebar = ({ mobile }) => (
         <div style={{ padding: mobile ? '24px' : '32px', display: 'flex', flexDirection: 'column', gap: 32, height: '100%' }}>
@@ -54,9 +63,21 @@ const AdminLayout = () => {
             </nav>
 
             <div style={{ marginTop: 'auto' }}>
-                <Link to="/" className="flex items-center gap-3" style={{ padding: '14px 16px', borderRadius: 14, background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.06)', textDecoration: 'none', color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.8rem' }}>
-                    <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} /> User Dashboard
-                </Link>
+                <button 
+                    onClick={handleLogout} 
+                    className="flex items-center gap-3 w-full" 
+                    style={{ 
+                        padding: '14px 16px', borderRadius: 14, 
+                        background: 'rgba(239, 68, 68, 0.05)', 
+                        border: '1px solid rgba(239, 68, 68, 0.1)', 
+                        color: 'var(--error)', fontWeight: 700, fontSize: '0.8rem',
+                        cursor: 'pointer', transition: 'all 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.08)'}
+                    onMouseOut={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}
+                >
+                    <LogOut size={16} /> Logout Admin
+                </button>
             </div>
         </div>
     );

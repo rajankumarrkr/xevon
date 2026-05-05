@@ -12,6 +12,9 @@ const statusConfig = {
 const typeConfig = {
     deposit: { label: 'Deposit', color: 'var(--success)', icon: ArrowDownRight },
     withdraw: { label: 'Withdraw', color: 'var(--error)', icon: ArrowUpRight },
+    earning: { label: 'Daily Income', color: 'var(--accent)', icon: ArrowDownRight },
+    referral_commission: { label: 'Referral Bonus', color: '#8b5cf6', icon: ArrowDownRight },
+    investment: { label: 'Investment', color: 'var(--warning)', icon: ArrowUpRight },
 };
 
 const tabs = [
@@ -199,7 +202,7 @@ const History = () => {
                                                 <div style={{
                                                     width: 42, height: 42, borderRadius: 14,
                                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    background: txn.type === 'deposit' ? 'rgba(22,163,74,0.1)' : 'rgba(225,29,72,0.1)',
+                                                    background: ['deposit', 'earning', 'referral_commission'].includes(txn.type) ? 'rgba(22,163,74,0.1)' : 'rgba(225,29,72,0.1)',
                                                 }}>
                                                     <type.icon size={20} style={{ color: type.color }} />
                                                 </div>
@@ -215,9 +218,9 @@ const History = () => {
                                             <div style={{ textAlign: 'right' }}>
                                                 <p className="outfit" style={{
                                                     fontSize: '0.88rem', fontWeight: 800,
-                                                    color: txn.type === 'deposit' ? 'var(--success)' : 'var(--error)',
+                                                    color: ['deposit', 'earning', 'referral_commission'].includes(txn.type) ? 'var(--success)' : 'var(--error)',
                                                 }}>
-                                                    {txn.type === 'deposit' ? '+' : '-'}₹{txn.amount.toLocaleString()}
+                                                    {['deposit', 'earning', 'referral_commission'].includes(txn.type) ? '+' : '-'}₹{txn.amount.toLocaleString()}
                                                 </p>
                                                 <div className="flex items-center justify-end gap-1" style={{ marginTop: 4 }}>
                                                     <StatusIcon size={10} style={{ color: status.color }} />

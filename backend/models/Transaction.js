@@ -23,6 +23,12 @@ const transactionSchema = new mongoose.Schema({
     description: {
         type: String
     },
+    bankDetails: {
+        bankName: String,
+        accountHolder: String,
+        accountNumber: String,
+        ifscCode: String
+    },
     proofImage: {
         type: String // URL or path for deposit screenshot
     },

@@ -50,12 +50,17 @@ export const withdraw = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Insufficient balance' });
         }
 
+        if (!user.bankDetails || !user.bankDetails.accountNumber) {
+            return res.status(400).json({ success: false, message: 'Bank account details not found' });
+        }
+
         const transaction = await Transaction.create({
             user: req.user.id,
             type: 'withdraw',
             amount,
             status: 'pending',
-            description: 'Withdrawal request pending approval'
+            bankDetails: user.bankDetails,
+            description: `Withdrawal request to ${user.bankDetails.bankName} (${user.bankDetails.accountNumber})`
         });
 
         // Deduct balance immediately to prevent double withdrawal

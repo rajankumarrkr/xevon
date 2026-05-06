@@ -169,6 +169,38 @@ export const changePassword = async (req, res) => {
     }
 };
 
+// @desc    Update bank details
+// @route   PUT /api/auth/bank
+// @access  Private
+export const updateBankDetails = async (req, res) => {
+    try {
+        const { bankName, accountHolder, accountNumber, ifscCode } = req.body;
+
+        if (!bankName || !accountHolder || !accountNumber || !ifscCode) {
+            return res.status(400).json({ success: false, message: 'Please provide all bank details' });
+        }
+
+        const user = await User.findById(req.user.id);
+        
+        user.bankDetails = {
+            bankName,
+            accountHolder,
+            accountNumber,
+            ifscCode
+        };
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            data: user,
+            message: 'Bank details updated successfully'
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 // @desc    Log user out / clear cookie
 // @route   GET /api/auth/logout
 // @access  Private

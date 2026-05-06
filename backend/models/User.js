@@ -42,6 +42,12 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    bankDetails: {
+        bankName: String,
+        accountHolder: String,
+        accountNumber: String,
+        ifscCode: String
+    },
     status: {
         type: String,
         enum: ['active', 'blocked'],

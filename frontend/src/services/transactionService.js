@@ -13,8 +13,8 @@ const transactionService = {
     },
 
     // Request withdrawal
-    withdraw: (amount, upi) =>
-        api.post('/transactions/withdraw', { amount, upi }),
+    withdraw: (amount) =>
+        api.post('/transactions/withdraw', { amount }),
 
     // Get my transactions
     getMine: () =>

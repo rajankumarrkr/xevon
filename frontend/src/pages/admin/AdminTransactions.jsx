@@ -69,9 +69,18 @@ const AdminTransactions = () => {
                         </div>
 
                         <div className="flex justify-between items-center" style={{ borderTop: '1px solid rgba(0,0,0,0.04)', paddingTop: 10 }}>
-                            <div className="flex items-center gap-2">
-                                <span style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: tx.type === 'deposit' ? 'var(--success)' : tx.type === 'investment' ? '#3B82F6' : tx.type === 'earning' ? '#A855F7' : 'var(--error)' }}>{tx.type.replace('_', ' ')}</span>
-                                <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>• {new Date(tx.createdAt).toLocaleDateString()}</span>
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center gap-2">
+                                    <span style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: tx.type === 'deposit' ? 'var(--success)' : tx.type === 'investment' ? '#3B82F6' : tx.type === 'earning' ? '#A855F7' : 'var(--error)' }}>{tx.type.replace('_', ' ')}</span>
+                                    <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>• {new Date(tx.createdAt).toLocaleDateString()}</span>
+                                </div>
+                                {tx.type === 'withdraw' && tx.bankDetails && (
+                                    <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 4 }}>
+                                        <strong>{tx.bankDetails.bankName}</strong><br />
+                                        A/c: {tx.bankDetails.accountNumber} ({tx.bankDetails.accountHolder})<br />
+                                        IFSC: {tx.bankDetails.ifscCode}
+                                    </div>
+                                )}
                             </div>
                             <div className="flex gap-2">
                                 {tx.type === 'deposit' && tx.proofImage && (

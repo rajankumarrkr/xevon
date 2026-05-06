@@ -37,7 +37,7 @@ export const distributeDailyProfits = async () => {
                     user: user._id,
                     type: 'earning',
                     amount: investment.dailyProfit,
-                    status: 'completed',
+                    status: 'approved',
                     description: `Daily profit from investment`
                 });
 

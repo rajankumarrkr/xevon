@@ -6,6 +6,7 @@ import { transactionService } from '../services';
 const statusConfig = {
     pending: { label: 'Pending', color: 'var(--warning)', bg: 'rgba(217,119,6,0.1)', icon: Clock },
     approved: { label: 'Approved', color: 'var(--success)', bg: 'rgba(22,163,74,0.1)', icon: CheckCircle },
+    completed: { label: 'Completed', color: 'var(--success)', bg: 'rgba(22,163,74,0.1)', icon: CheckCircle },
     rejected: { label: 'Rejected', color: 'var(--error)', bg: 'rgba(225,29,72,0.1)', icon: XCircle },
 };
 

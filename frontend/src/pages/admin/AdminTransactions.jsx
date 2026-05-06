@@ -35,7 +35,7 @@ const AdminTransactions = () => {
 
             {/* Filters */}
             <div className="flex gap-2" style={{ overflowX: 'auto', paddingBottom: 4 }}>
-                {['pending', 'approved', 'rejected', 'all'].map((f) => (
+                {['pending', 'approved', 'completed', 'rejected', 'all'].map((f) => (
                     <button key={f} onClick={() => setFilter(f)} style={{
                         padding: '10px 20px', borderRadius: 12, fontWeight: 700, fontSize: 11, letterSpacing: '1px',
                         textTransform: 'uppercase', transition: 'all 0.2s', whiteSpace: 'nowrap', border: 'none',
@@ -64,7 +64,7 @@ const AdminTransactions = () => {
                             </div>
                             <div style={{ textAlign: 'right' }}>
                                 <p className="outfit" style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--accent)' }}>₹{tx.amount.toLocaleString()}</p>
-                                <p style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: tx.status === 'pending' ? '#FACC15' : tx.status === 'approved' ? 'var(--success)' : 'var(--error)' }}>{tx.status}</p>
+                                <p style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: tx.status === 'pending' ? '#FACC15' : (tx.status === 'approved' || tx.status === 'completed') ? 'var(--success)' : 'var(--error)' }}>{tx.status}</p>
                             </div>
                         </div>
 

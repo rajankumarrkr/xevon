@@ -117,11 +117,11 @@ const Profile = () => {
                     </div>
                 ) : investments.length > 0 ? (
                     investments.map((inv, idx) => (
-                        <ProfileItem 
+                        <ProfileItem
                             key={idx}
-                            icon={Zap} 
-                            label={inv.plan?.name || 'Investment Plan'} 
-                            value={`₹${inv.amount?.toLocaleString()} • Daily ₹${inv.dailyProfit?.toLocaleString()}`} 
+                            icon={Zap}
+                            label={inv.plan?.name || 'Investment Plan'}
+                            value={`₹${inv.amount?.toLocaleString()} • Daily ₹${inv.dailyProfit?.toLocaleString()}`}
                             color="var(--accent)"
                             to="/plans"
                         />
@@ -137,7 +137,7 @@ const Profile = () => {
                 </div>
                 <ProfileItem icon={HistoryIcon} label="Transactions" value="View Records" to="/history" color="var(--accent)" />
                 <ProfileItem icon={Bell} label="Notifications" value="Active" color="var(--accent-dark)" />
-                <ProfileItem icon={ExternalLink} label="Support" value="Telegram" color="var(--success)" to="http://t.me/OnlineSupportusersindia" />
+                <ProfileItem icon={ExternalLink} label="Support" value="Telegram" color="var(--success)" to="http://t.me/XevonIndia" />
                 <ProfileItem icon={Settings} label="Version" value="v2.4.0" />
             </div>
 
